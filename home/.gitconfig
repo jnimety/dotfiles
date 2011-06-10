@@ -1,0 +1,11 @@
+[color]
+  status = auto
+  diff = auto
+  branch = auto
+[user]
+  name = Joel Nimety
+  email = jnimety@continuity.net
+[push]
+  default = current
+[core]
+	editor = /usr/bin/vim
