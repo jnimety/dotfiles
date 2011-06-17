@@ -6,4 +6,4 @@
 #export CPPFLAGS="-I/usr/local/include"
 
 #export rvm_configure_flags="--enable-shared=yes --with-readline-dir=/usr/local"
-export rvm_path="/Users/jnimety/.rvm"
+export rvm_path="$HOME/.rvm"
