@@ -90,6 +90,7 @@ unset GREP_OPTIONS # .oh-my-zsh options conflict with homebrew/cmake
 stty stop undef
 setopt NO_FLOW_CONTROL
 setopt magicequalsubst
+setopt interactivecomments
 bindkey '^R' history-incremental-search-backward
 autoload -U zrecompile
 
