@@ -79,9 +79,9 @@ export RUBY_FREE_MIN=$RUBY_HEAP_FREE_MIN
 # \[\e]1;\]$(basename $(dirname $PWD))/\W\[\a\]
 
 #alias timestamp='date +"%Y%m%d%H%M%S"'
-alias ls='gls --color=auto'
-alias tar='gtar'
-alias seq='gseq'
+[[ -e `which gls` ]] && alias ls='gls --color=auto'
+[[ -e `which gtar` ]] && alias tar='gtar'
+[[ -e `which gseq` ]] && alias seq='gseq'
 unset GREP_OPTIONS # .oh-my-zsh options conflict with homebrew/cmake
 
 #disable ctrl-s/suspension
