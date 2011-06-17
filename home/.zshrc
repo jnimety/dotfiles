@@ -56,9 +56,9 @@ export PATH=$PATH:${EC2_AMITOOL_HOME}/bin
 
 # UTF-8
 #######
-#export LANG=en_US.UTF-8
-#export LOCALE=UTF-8
-#export LESSCHARSET='utf-8'
+export LANG=en_US.UTF-8
+export LOCALE=UTF-8
+export LESSCHARSET='utf-8'
 
 export GPG_TTY=`tty`
 
@@ -74,7 +74,7 @@ export RUBY_FREE_MIN=$RUBY_HEAP_FREE_MIN
 # Put the string " [bash]   hostname::/full/directory/path"
 # in the title bar using the command sequence
 # \[\e]2;[bash]   \h::\]$PWD\[\a\]
-# Put the penultimate and current directory 
+# Put the penultimate and current directory
 # in the iterm tab
 # \[\e]1;\]$(basename $(dirname $PWD))/\W\[\a\]
 
