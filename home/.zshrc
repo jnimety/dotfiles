@@ -34,11 +34,13 @@ export PATH=$PATH:$HOME/bin
 export HISTCONTROL=ignoredups
 
 # Setup Amazon EC2 Command-Line Tools
-export EC2_HOME=~/.ec2
-export PATH=$PATH:$EC2_HOME/bin
-export EC2_PRIVATE_KEY="$(ls $EC2_HOME/pk-*.pem)"
-export EC2_CERT="$(ls $EC2_HOME/cert-*.pem)"
-export EC2_AMITOOL_HOME=${EC2_HOME}/ec2-ami-tools-1.3-31780
+if [ -d ~/.ec2 ]; then
+  export EC2_HOME=~/.ec2
+  export PATH=$PATH:$EC2_HOME/bin
+  export EC2_PRIVATE_KEY="$(ls $EC2_HOME/pk-*.pem)"
+  export EC2_CERT="$(ls $EC2_HOME/cert-*.pem)"
+  export EC2_AMITOOL_HOME=${EC2_HOME}/ec2-ami-tools-1.3-31780
+fi
 
 export JAVA_HOME="/Library/Java/Home/"
 export AWS_IAM_HOME="/usr/local/Cellar/aws-iam-tools/HEAD/jars"
