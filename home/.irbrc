@@ -31,5 +31,5 @@ end
 require 'irb/completion'
 
 # Prompt behavior
-ARGV.concat [ "--readline", "--prompt-mode", "simple" ]
-
+IRB.conf[:USE_READLINE] = true # Adds readline functionality
+#IRB.conf[:PROMPT_MODE] = :SIMPLE
