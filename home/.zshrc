@@ -22,7 +22,7 @@ source $ZSH/oh-my-zsh.sh
 
 # Customize to your needs...
 
-alias gl='git pull --rebase --preserve-merges'
+alias gl='git pull --rebase -p'
 
 # User specific environment and startup programs
 
