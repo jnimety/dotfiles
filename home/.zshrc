@@ -16,13 +16,15 @@ export ZSH_THEME="jnimety"
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git git-flow rails3 ruby osx gem vi-mode brew bundler)
+plugins=(git git-flow rails3 ruby osx gem vi-mode brew bundler taskwarrior)
 
 source $ZSH/oh-my-zsh.sh
 
 # Customize to your needs...
 
 alias gl='git pull --rebase -p'
+alias rs='_rails_command server thin'
+alias rsd='_rails_command server thin --debugger'
 
 # User specific environment and startup programs
 
