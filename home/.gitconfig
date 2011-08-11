@@ -8,4 +8,4 @@
 [push]
   default = current
 [core]
-	editor = /usr/bin/vim
+	editor = /usr/local/bin/vim
