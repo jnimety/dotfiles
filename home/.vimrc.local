@@ -5,6 +5,9 @@ let g:GPGExecutable  = '/usr/local/bin/gpg'
 
 set clipboard=unnamed
 
+set noignorecase
+set hidden
+
 " solarized theme
 syntax enable
 let g:solarized_termtrans = 1
