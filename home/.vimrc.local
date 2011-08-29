@@ -26,3 +26,6 @@ imap <up> <nop>
 imap <down> <nop>
 imap <left> <nop>
 imap <right> <nop>
+
+" enable utilsnips
+set runtimepath+=~/.vim/ultisnips_rep
