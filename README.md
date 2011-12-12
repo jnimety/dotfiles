@@ -13,10 +13,5 @@
     homesick clone jnimety/dotfiles
     homesick symlink jnimety/dotfiles
 
-    # install janus vimfiles
-    git clone git://github.com/carlhuda/janus.git ~/.vim
-    cd ~/.vim
-    rake
-
     # install oh-my-zsh
     git clone git://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh

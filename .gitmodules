@@ -1,0 +1,33 @@
+[submodule "home/.vim/bundle/vim-colors-solarized"]
+	path = home/.vim/bundle/vim-colors-solarized
+	url = git://github.com/altercation/vim-colors-solarized.git
+[submodule "home/.vim/bundle/vim-git"]
+	path = home/.vim/bundle/vim-git
+	url = git://github.com/tpope/vim-git.git
+[submodule "home/.vim/bundle/vim-fugitive"]
+	path = home/.vim/bundle/vim-fugitive
+	url = git://github.com/tpope/vim-fugitive.git
+[submodule "home/.vim/bundle/vim-javascript"]
+	path = home/.vim/bundle/vim-javascript
+	url = git://github.com/pangloss/vim-javascript.git
+[submodule "home/.vim/bundle/vim-surround"]
+	path = home/.vim/bundle/vim-surround
+	url = git://github.com/tpope/vim-surround.git
+[submodule "home/.vim/bundle/vim-rails"]
+	path = home/.vim/bundle/vim-rails
+	url = git://github.com/tpope/vim-rails.git
+[submodule "home/.vim/bundle/vim-rspec"]
+	path = home/.vim/bundle/vim-rspec
+	url = git://github.com/taq/vim-rspec.git
+[submodule "home/.vim/bundle/vim-align"]
+	path = home/.vim/bundle/vim-align
+	url = git://github.com/tsaleh/vim-align.git
+[submodule "home/.vim/bundle/puppet-vim"]
+	path = home/.vim/bundle/puppet-vim
+	url = git://github.com/ajf/puppet-vim.git
+[submodule "home/.vim/bundle/vim-endwise"]
+	path = home/.vim/bundle/vim-endwise
+	url = git://github.com/tpope/vim-endwise.git
+[submodule "home/.vim/bundle/vim-ruby"]
+	path = home/.vim/bundle/vim-ruby
+	url = git://github.com/vim-ruby/vim-ruby.git
