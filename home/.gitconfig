@@ -1,11 +1,21 @@
+[user]
+  name = Joel Nimety
+  email = jnimety@continuity.net
+[advice]
+  statusHints = false
 [color]
   status = auto
   diff = auto
   branch = auto
-[user]
-  name = Joel Nimety
-  email = jnimety@continuity.net
+  ui = auto
 [push]
   default = current
+[alias]
+  l = log --graph
 [core]
 	editor = /usr/local/bin/vim
+  preloadindex = true
+[format]
+  pretty = format:%C(yellow)%h%Creset -%C(red)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset
+[merge]
+  tool = /usr/local/vimdiff
