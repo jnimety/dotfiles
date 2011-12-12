@@ -16,13 +16,14 @@ export ZSH_THEME="jnimety"
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git git-flow rails3 ruby osx gem vi-mode brew bundler taskwarrior)
+plugins=(git git-flow rails3 ruby osx gem vi-mode brew bundler)
 
 source $ZSH/oh-my-zsh.sh
 
 # Customize to your needs...
 
 alias gl='git pull --rebase -p'
+alias glgg='git --no-pager log --graph --max-count=20'
 alias rs='_rails_command server thin'
 alias rsd='_rails_command server thin --debugger'
 
@@ -71,6 +72,9 @@ export RUBY_GC_MALLOC_LIMIT=1000000000
 export RUBY_HEAP_FREE_MIN=500000
 export RUBY_FREE_MIN=$RUBY_HEAP_FREE_MIN
 
+export JRUBY_OPTS="--1.9"
+export RBXOPT="-X19"
+
 # iTerm Tab and Title Customization and prompt customization
 # Put the string " [bash]   hostname::/full/directory/path"
 # in the title bar using the command sequence
@@ -79,6 +83,7 @@ export RUBY_FREE_MIN=$RUBY_HEAP_FREE_MIN
 # in the iterm tab
 # \[\e]1;\]$(basename $(dirname $PWD))/\W\[\a\]
 
+alias :e='vim'
 #alias timestamp='date +"%Y%m%d%H%M%S"'
 [[ -e `which gls` ]] && alias ls='gls --color=auto'
 [[ -e `which gtar` ]] && alias tar='gtar'

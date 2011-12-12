@@ -1,9 +1,2 @@
-#export LD_LIBRARY_PATH=/usr/local/lib
-#export LIBRARY_PATH=/usr/local/lib
-#export CC="/usr/bin/gcc"
-#export CFLAGS="-O2 -arch i386"
-#export LDFLAGS="-L/usr/local/lib"
-#export CPPFLAGS="-I/usr/local/include"
-
-#export rvm_configure_flags="--enable-shared=yes --with-readline-dir=/usr/local"
 export rvm_path="$HOME/.rvm"
+rvm_project_rvmrc=0
