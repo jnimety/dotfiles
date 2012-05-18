@@ -16,7 +16,7 @@ export ZSH_THEME="jnimety"
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git git-flow rails3 ruby osx gem vi-mode brew bundler)
+plugins=(git git-flow rails3 ruby osx gem vi-mode bundler)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -42,8 +42,8 @@ if [ -d ~/.ec2 ]; then
   export EC2_AMITOOL_HOME=${EC2_HOME}/ec2-ami-tools-1.3-31780
 fi
 
-export JAVA_HOME="/Library/Java/Home/"
-export AWS_IAM_HOME="/usr/local/Cellar/aws-iam-tools/HEAD/jars"
+export JAVA_HOME="$(/usr/libexec/java_home)"
+export AWS_IAM_HOME="/usr/local/Cellar/aws-iam-tools/1.4.0/jars"
 export AWS_CREDENTIAL_FILE=$HOME/.aws-credentials-master
 export AWS_RDS_HOME="/usr/local/Cellar/rds-command-line-tools/1.3.003/jars"
 
@@ -67,12 +67,12 @@ export LESSCHARSET='utf-8'
 export GPG_TTY=`tty`
 
 # Ruby Tuning
-export RUBY_HEAP_MIN_SLOTS=500000
-export RUBY_HEAP_SLOTS_INCREMENT=500000
-export RUBY_HEAP_SLOTS_GROWTH_FACTOR=1
-export RUBY_GC_MALLOC_LIMIT=500000000
-export RUBY_HEAP_FREE_MIN=500000
-export RUBY_FREE_MIN=$RUBY_HEAP_FREE_MIN
+#export RUBY_HEAP_MIN_SLOTS=500000
+#export RUBY_HEAP_SLOTS_INCREMENT=500000
+#export RUBY_HEAP_SLOTS_GROWTH_FACTOR=1
+#export RUBY_GC_MALLOC_LIMIT=500000000
+#export RUBY_HEAP_FREE_MIN=500000
+#export RUBY_FREE_MIN=$RUBY_HEAP_FREE_MIN
 
 export JRUBY_OPTS="--1.9"
 export RBXOPT="-X19"
@@ -100,4 +100,5 @@ setopt interactivecomments
 bindkey '^R' history-incremental-search-backward
 autoload -U zrecompile
 
+export CARRIERWAVE_STORAGE="file"
 __rvm_project_rvmrc
