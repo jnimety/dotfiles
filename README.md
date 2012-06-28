@@ -13,5 +13,8 @@
     homesick clone jnimety/dotfiles
     homesick symlink jnimety/dotfiles
 
+    # update git submodules
+    cd ~/.homesick/repos/jnimety/dotfiles && git submodule init && git submodule update
+
     # install oh-my-zsh
     git clone git://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
