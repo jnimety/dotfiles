@@ -50,6 +50,7 @@ export AWS_RDS_HOME="/usr/local/Cellar/rds-command-line-tools/1.3.003/jars"
 export PATH=$PATH:${EC2_AMITOOL_HOME}/bin
 
 source ~/.aws-credentials-continuity.sh
+source ~/.zshrc_secrets
 
 #if [ -f "${HOME}/.gpg-agent-info" ]; then
 #  . "${HOME}/.gpg-agent-info"
