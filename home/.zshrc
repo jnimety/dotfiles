@@ -24,8 +24,8 @@ source $ZSH/oh-my-zsh.sh
 
 alias gl='git pull --rebase -p'
 alias glgg='git --no-pager log --graph --max-count=20'
-alias rs='_rails_command server thin'
-alias rsd='_rails_command server thin --debugger'
+alias rs='_rails_command server Puma'
+alias rsd='_rails_command server Puma --debugger'
 
 # User specific environment and startup programs
 
