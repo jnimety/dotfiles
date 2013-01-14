@@ -74,9 +74,10 @@ export GPG_TTY=`tty`
 #export RUBY_GC_MALLOC_LIMIT=500000000
 #export RUBY_HEAP_FREE_MIN=500000
 #export RUBY_FREE_MIN=$RUBY_HEAP_FREE_MIN
+export RUBY_GC_MALLOC_LIMIT=60000000
+export RUBY_FREE_MIN=200000
 
-export JRUBY_OPTS="--1.9"
-export RBXOPT="-X19"
+export JRUBY_OPTS="-J-Xmx1024m"
 
 # iTerm Tab and Title Customization and prompt customization
 # Put the string " [bash]   hostname::/full/directory/path"
