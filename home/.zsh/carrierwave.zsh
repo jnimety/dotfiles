@@ -1,0 +1,1 @@
+export CARRIERWAVE_STORAGE="file"

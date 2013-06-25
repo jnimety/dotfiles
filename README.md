@@ -10,8 +10,11 @@
 
     # Clone dotfiles
     gem install homesick
-    homesick clone jnimety/dotfiles
-    homesick symlink jnimety/dotfiles
+    for x in ContinuityControl/dotfiles benjaminoakes/homesick-vi-everywhere jnimety/dotfiles
+    do
+      homesick clone $x
+      homesick symlink $x
+    done
 
     # install oh-my-zsh
     git clone git://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh

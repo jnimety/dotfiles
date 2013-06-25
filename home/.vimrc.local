@@ -1,0 +1,26 @@
+" Share clipboard with OS X
+set clipboard=unnamed
+
+" GPG Settings
+let g:GPGPreferArmor = 1
+let g:GPGUseAgent    = 1
+let g:GPGExecutable  = '/usr/local/bin/gpg'
+
+" use par for paragraph formating if available
+if executable("par")
+  set formatprg=par\ w72qrg
+endif
+
+" disable arrow keys
+map <up> <nop>
+map <down> <nop>
+map <left> <nop>
+map <right> <nop>
+imap <up> <nop>
+imap <down> <nop>
+imap <left> <nop>
+imap <right> <nop>
+
+" Set encoding
+set encoding=utf-8
+
