@@ -122,6 +122,9 @@ source-file "$HOME/.personal/tmux/user.conf"
 
 (These are still gitignored, but at least they'll stay tiny.)
 
+#### Post install
+in vim run `:PlugInstall` to install :all-the-things: !
+
 #### Future direction
 
 The `zsh` and `git` configs could be made to look in `.personal` and skip if it doesn't exist (allowing this idea to be pulled up into this repository), but unfortunately `tmux` complains when it can't source a file, which is why we went this route for now.
