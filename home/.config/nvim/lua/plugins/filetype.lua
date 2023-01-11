@@ -17,6 +17,29 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = {
+    "ruby",
+  },
+  callback = function(_)
+    -- Temporary, not quite perfect, workaround for:
+    -- https://github.com/nvim-treesitter/nvim-treesitter/issues/3363
+    -- https://github.com/tree-sitter/tree-sitter-ruby/issues/230
+    vim.cmd [[ setlocal indentkeys-=. ]]
+  end,
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = {
+    "gitcommit",
+    "markdown",
+  },
+  callback = function(_)
+    vim.opt_local.wrap = true
+    vim.opt_local.spell = true
+  end,
+})
+
 return {
   "nathom/filetype.nvim",
   opts = {
@@ -26,25 +49,6 @@ return {
         tfvars = "terraform",
         tfstate = "json",
         rbi = "ruby",
-      },
-
-      function_literal = {
-        gitcommit = function()
-          vim.opt_local.wrap = false
-          vim.opt_local.spell = true
-        end,
-
-        markdown = function()
-          vim.opt_local.wrap = true
-          vim.opt_local.spell = true
-        end,
-
-        -- Temporary, not quite perfect, workaround for:
-        -- https://github.com/nvim-treesitter/nvim-treesitter/issues/3363
-        -- https://github.com/tree-sitter/tree-sitter-ruby/issues/230
-        ruby = function()
-          vim.cmd [[ setlocal indentkeys-=. ]]
-        end,
       },
     },
   },
