@@ -1,8 +1,8 @@
 export EDITOR=vim
 export ZSH=$HOME/.oh-my-zsh
 export ZSH_CUSTOM=$HOME/.oh-my-zsh-custom
-export ZSH_THEME="continuity"
-plugins=(git git-flow rails ruby macos gem vi-mode rvm bundler)
+export ZSH_THEME="jnimety"
+plugins=(git git-flow rails ruby macos gem vi-mode rvm bundler terraform)
 
 source $ZSH/oh-my-zsh.sh
 
