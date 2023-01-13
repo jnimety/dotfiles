@@ -24,6 +24,7 @@ vim.opt.directory = vim.fs.normalize("~/.vim/backup")
 
 -- Line numbers
 vim.wo.number = true
+vim.wo.relativenumber = true
 
 vim.o.updatetime = 250
 vim.wo.signcolumn = 'yes'
