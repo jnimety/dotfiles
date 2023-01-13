@@ -13,9 +13,24 @@ local current_buffer_fuzzy_find = function()
   )
 end
 
-return {
-  -- Fuzzy Finder Algorithm which requires local dependencies to be built. Only load if `make` is available
+local search_lsp_document_symbols = function()
+  require('telescope.builtin').lsp_document_symbols {
+    symbols = {
+      "Class",
+      "Function",
+      "Method",
+      "Constructor",
+      "Interface",
+      "Module",
+      "Struct",
+      "Trait",
+      "Field",
+      "Property",
+    },
+  }
+end
 
+return {
   -- Fuzzy Finder (files, lsp, etc)
   {
     'nvim-telescope/telescope.nvim',
@@ -24,6 +39,7 @@ return {
     dependencies = {
       'nvim-lua/plenary.nvim',
       {
+        -- Fuzzy Finder Algorithm which requires local dependencies to be built. Only load if `make` is available
         'nvim-telescope/telescope-fzf-native.nvim',
         build = 'make',
         cond = vim.fn.executable 'make' == 1
@@ -51,6 +67,7 @@ return {
       { '<leader>sd', "<cmd>Telescope diagnostics<cr>", desc = '[S]earch [D]iagnostics' },
       { "<leader>sb", "<cmd>Telescope current_buffer_fuzzy_find<cr>", desc = "Buffer" },
       { "<leader>:", "<cmd>Telescope command_history<cr>", desc = "Command History" },
+      { "<leader>ss", search_lsp_document_symbols, desc = "Goto Symbol" },
 
       -- More examples
       -- { "<leader>fr", "<cmd>Telescope oldfiles<cr>", desc = "Recent" ),
