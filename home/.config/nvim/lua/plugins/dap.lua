@@ -27,6 +27,17 @@ return {
       }
     }
 
+    dap.configurations.haml = {
+      {
+        type = "ruby",
+        name = "debug remote",
+        request = "attach",
+        options = {
+          source_filetype = 'haml',
+        },
+      }
+    }
+
     local dapui = require("dapui")
 
     dapui.setup({
