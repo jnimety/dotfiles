@@ -5,10 +5,12 @@
 
 local current_buffer_fuzzy_find = function()
   -- You can pass additional configuration to telescope to change theme, layout, etc.
-  require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
-    winblend = 10,
-    previewer = false,
-  })
+  require('telescope.builtin').current_buffer_fuzzy_find(
+    require('telescope.themes').get_dropdown {
+      winblend = 10,
+      previewer = false,
+    }
+  )
 end
 
 return {
@@ -40,7 +42,7 @@ return {
       },
     },
     keys = {
-      { '<leader><space>', "<cmd>Telescope buffers<cr>", desc = 'Find existing buffers' },
+      { '<leader><space>', "<cmd>Telescope buffers<cr>", desc = 'Find buffer' },
       { '<leader>/', current_buffer_fuzzy_find, desc = 'Fuzzy search in current buffer' },
       { '<leader>ff', "<cmd>Telescope find_files<cr>", desc = '[F]ind [F]iles' },
       { '<leader>sh', "<cmd>Telescope help_tags<cr>", desc = '[S]earch [H]elp' },
@@ -48,24 +50,20 @@ return {
       { '<leader>sg', "<cmd>Telescope live_grep<cr>", desc = '[S]earch by [G]rep' },
       { '<leader>sd', "<cmd>Telescope diagnostics<cr>", desc = '[S]earch [D]iagnostics' },
       { "<leader>sb", "<cmd>Telescope current_buffer_fuzzy_find<cr>", desc = "Buffer" },
-      { "<leader>,", "<cmd>Telescope buffers show_all_buffers=true<cr>", desc = "Switch Buffer" },
       { "<leader>:", "<cmd>Telescope command_history<cr>", desc = "Command History" },
 
       -- More examples
-      -- { "<leader>fb", "<cmd>Telescope buffers<cr>", desc = "Buffers" ),
       -- { "<leader>fr", "<cmd>Telescope oldfiles<cr>", desc = "Recent" ),
       -- { "<leader>gc", "<cmd>Telescope git_commits<CR>", desc = "commits" ),
       -- { "<leader>gs", "<cmd>Telescope git_status<CR>", desc = "status" ),
       -- { "<leader>ha", "<cmd>Telescope autocommands<cr>", desc = "Auto Commands" ),
       -- { "<leader>hc", "<cmd>Telescope commands<cr>", desc = "Commands" ),
       -- { "<leader>hf", "<cmd>Telescope filetypes<cr>", desc = "File Types" ),
-      -- { "<leader>hh", "<cmd>Telescope help_tags<cr>", desc = "Help Pages" ),
       -- { "<leader>hk", "<cmd>Telescope keymaps<cr>", desc = "Key Maps" ),
       -- { "<leader>hm", "<cmd>Telescope man_pages<cr>", desc = "Man Pages" ),
       -- { "<leader>ho", "<cmd>Telescope vim_options<cr>", desc = "Options" ),
       -- { "<leader>hs", "<cmd>Telescope highlights<cr>", desc = "Search Highlight Groups" ),
       -- { "<leader>ht", "<cmd>Telescope builtin<cr>", desc = "Telescope" ),
-      -- { "<leader>sc", "<cmd>Telescope command_history<cr>", desc = "Command History" ),
       -- { "<leader>sm", "<cmd>Telescope marks<cr>", desc = "Jump to Mark" ),
     },
     config = function(_, opts)

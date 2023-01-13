@@ -5,7 +5,7 @@ return {
     "theHamsta/nvim-dap-virtual-text",
     "rcarriga/nvim-dap-ui",
   },
-  config = function(_, opts)
+  config = function()
     local dap = require("dap")
     require("nvim-dap-virtual-text")
 
@@ -23,7 +23,6 @@ return {
         options = {
           source_filetype = 'ruby',
         },
-        -- localfs = true,
         waiting = 1000,
       }
     }

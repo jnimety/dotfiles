@@ -108,7 +108,7 @@ return {
 
       'hrsh7th/cmp-nvim-lsp',
     },
-    config = function(_, _)
+    config = function()
       vim.diagnostic.config({
         signs = {
           active = true,
@@ -173,7 +173,8 @@ return {
       lspconfig.sorbet.setup {
         on_attach = on_attach,
         capabilities = capabilities,
-        cmd = { "bundle", "exec", "srb", "tc", "--lsp" },
+        filetypes = { 'ruby' },
+        cmd = { "bundle", "exec", "srb", "typecheck", "--lsp" },
       }
 
       -- lspconfig.steep.setup {
@@ -274,7 +275,6 @@ return {
         -- yarn pnp compatible way of running js language server, see package.json:scripts
         cmd = { "yarn", "pnp-typescript-language-server", "--stdio" },
       }
-
     end
   },
 
