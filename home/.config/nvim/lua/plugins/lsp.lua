@@ -49,6 +49,36 @@ local on_attach = function(_, bufnr)
   vim.keymap.set('v', '<leader>cf', vim.cmd.Format, keymap_opts("[C]ode [F]ormat Range"))
 end
 
+-- Special on_attach until neovim supports textDocument/diagnostic
+-- https://github.com/Shopify/ruby-lsp/issues/188#issuecomment-1268932965
+local ruby_ls_on_attach = function(client, bufnr)
+  on_attach(client, bufnr)
+
+  vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWritePre', 'CursorHold' }, {
+    buffer = bufnr,
+
+    callback = function()
+      vim.schedule(function()
+        local params = vim.lsp.util.make_text_document_params(bufnr)
+
+        client.request(
+          'textDocument/diagnostic',
+          { textDocument = params },
+          function(err, result)
+            if err then return end
+
+            vim.lsp.diagnostic.on_publish_diagnostics(
+              nil,
+              vim.tbl_extend('keep', params, { diagnostics = result.items }),
+              { client_id = client.id }
+            )
+          end
+        )
+      end)
+    end,
+  })
+end
+
 return {
   {
     "jose-elias-alvarez/null-ls.nvim",
@@ -184,39 +214,25 @@ return {
       -- }
 
       lspconfig.ruby_ls.setup {
-        on_attach = on_attach,
+        on_attach = ruby_ls_on_attach,
         capabilities = capabilities,
         cmd = { "bundle", "exec", "ruby-lsp" },
-        initOptions = {
+        init_options = {
           enabledFeatures = {
             "codeActions",
-            -- "diagnostics", -- handled by solargraph
-            -- "documentHighlights", -- handled by sorbet
-            -- "documentSymbols", -- handled by sorbet
-            "formatting", -- handled by sorbet
-            -- "inlayHint",
+            "diagnostics",
+            "documentHighlights",
+            -- "documentLink",
+            "documentSymbols",
+            -- "foldingRanges",
+            "formatting",
+            -- "hover",
+            "inlayHint",
+            -- "onTypeFormatting",
+            -- "selectionRanges",
+            -- "semanticHighlighting"
           }
         }
-      }
-
-      lspconfig.solargraph.setup {
-        on_attach = on_attach,
-        capabilities = capabilities,
-        cmd = { "bundle", "exec", "solargraph", "stdio" },
-        settings = {
-          solargraph = {
-            autoformat = false,
-            completion = false,
-            definitions = false,
-            diagnostics = true,
-            folding = false,
-            formatting = false,
-            hover = false,
-            references = false,
-            rename = false,
-            symbols = false,
-          }
-        },
       }
 
       lspconfig.stylelint_lsp.setup {
@@ -308,7 +324,6 @@ return {
           "jsonls",
           "ruby_ls",
           "rust_analyzer",
-          "solargraph",
           "sorbet",
           "stylelint_lsp",
           "sumneko_lua",
