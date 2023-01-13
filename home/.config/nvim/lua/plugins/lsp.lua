@@ -109,7 +109,6 @@ return {
               RUBYOPT = "-W0",
             }
           }),
-          null_ls.builtins.code_actions.gitsigns,
         },
       }
     end,
@@ -166,11 +165,14 @@ return {
 
       local float_config = {
         focusable = true,
+        focus = false,
         style = "minimal",
         border = "single",
+        source = "if_many",
       }
       vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, float_config)
       vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, float_config)
+
       local capabilities = vim.lsp.protocol.make_client_capabilities()
       capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
