@@ -13,3 +13,8 @@ vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = tr
 -- move blocks of text in visual mode
 vim.keymap.set('x', "<C-j>", [[ ":m '>+" .. (v:count1) .. "\<CR>gv=gv" ]], { expr = true })
 vim.keymap.set('x', "<C-k>", [[ ":m '<-" .. (v:count1 + 1) .. "\<CR>gv=gv" ]], { expr = true })
+
+-- Change 1.8 hash syntax on the current line to 1.9.
+-- NB: this isn't perfect, but it's pretty good.
+-- List of valid symbol chars: https://gist.github.com/misfo/1072693
+vim.keymap.set('n', ",9", [[ <cmd>.s/:\([_a-z0-9]\{1,}\) *=>/\1:/g<cr><cmd>nohlsearch<cr> ]])

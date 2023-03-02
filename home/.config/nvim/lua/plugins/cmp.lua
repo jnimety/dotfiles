@@ -25,8 +25,8 @@ return {
       'hrsh7th/cmp-cmdline',
     },
     opts = function()
-      local cmp = require 'cmp'
-      local luasnip = require 'luasnip'
+      local cmp = require('cmp')
+      local luasnip = require('luasnip')
 
       return {
         snippet = {
@@ -39,7 +39,7 @@ return {
           documentation = cmp.config.window.bordered(),
         },
         mapping = cmp.mapping.preset.insert({
-          ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+          ['<C-b>'] = cmp.mapping.scroll_docs( -4),
           ['<C-f>'] = cmp.mapping.scroll_docs(4),
           ['<C-Space>'] = cmp.mapping.complete(),
           ['<CR>'] = cmp.mapping.confirm {
@@ -60,8 +60,8 @@ return {
           ['<S-Tab>'] = cmp.mapping(function(fallback)
             if cmp.visible() then
               cmp.select_prev_item()
-            elseif luasnip.jumpable(-1) then
-              luasnip.jump(-1)
+            elseif luasnip.jumpable( -1) then
+              luasnip.jump( -1)
             else
               fallback()
             end
@@ -73,6 +73,22 @@ return {
           { name = 'buffer' },
           { name = 'path' },
         }),
+        formatting = {
+          format = function(entry, vim_item)
+            local kind_icons = require("defaults").icons.kinds
+
+            vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind], vim_item.kind) -- This concatonates the icons with the name of the item kind
+            -- Source
+            vim_item.menu = ({
+                buffer = "[Buffer]",
+                nvim_lsp = "[LSP]",
+                luasnip = "[LuaSnip]",
+                nvim_lua = "[Lua]",
+                latex_symbols = "[LaTeX]",
+              })[entry.source.name]
+            return vim_item
+          end,
+        },
         experimental = {
           ghost_text = {
             hl_group = "LspCodeLens",
@@ -81,7 +97,7 @@ return {
       }
     end,
     config = function(_, opts)
-      local cmp = require 'cmp'
+      local cmp = require('cmp')
       cmp.setup(opts)
 
       -- Set configuration for specific filetype.

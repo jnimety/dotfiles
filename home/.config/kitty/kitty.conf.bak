@@ -351,7 +351,7 @@ symbol_map U+23FB-U+23FE,U+2665,U+26A1,U+2B58,U+E000-U+E00A,U+E0A0-U+E0A3,U+E0B0
 #: URLs under the mouse cursor. By default, all characters that are
 #: legal in URLs are allowed.
 
-# copy_on_select no
+copy_on_select yes
 
 #: Copy to clipboard or a private buffer on select. With this set to
 #: clipboard, selecting text with the mouse will cause the text to be
@@ -384,7 +384,7 @@ symbol_map U+23FB-U+23FE,U+2665,U+26A1,U+2B58,U+E000-U+E00A,U+E0A0-U+E0A3,U+E0B0
 #:     the kitty config directory on the pasted text. The text returned by the
 #:     function will be actually pasted.
 
-# strip_trailing_spaces never
+strip_trailing_spaces always
 
 #: Remove spaces at the end of lines when copying to clipboard. A
 #: value of smart will do it when using normal selections, but not

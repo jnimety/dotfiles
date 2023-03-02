@@ -53,12 +53,13 @@ return {
             ['<C-d>'] = false,
           },
         },
-        prompt_prefix = " ",
-        selection_caret = " ",
+        prompt_prefix = require("defaults").icons.telescope.prompt_prefix,
+        selection_caret = require("defaults").icons.telescope.selection_caret,
       },
     },
     keys = {
       { '<leader><space>', "<cmd>Telescope buffers<cr>", desc = 'Find buffer' },
+      { '<leader>fb', "<cmd>Telescope buffers<cr>", desc = 'Find buffer' },
       { '<leader>/', current_buffer_fuzzy_find, desc = 'Fuzzy search in current buffer' },
       { '<leader>ff', "<cmd>Telescope find_files<cr>", desc = '[F]ind [F]iles' },
       { '<leader>sh', "<cmd>Telescope help_tags<cr>", desc = '[S]earch [H]elp' },
@@ -88,6 +89,7 @@ return {
 
       -- Enable telescope fzf native, if installed
       pcall(require('telescope').load_extension, 'fzf')
+      pcall(require("telescope").load_extension, 'notify')
     end
 
   },

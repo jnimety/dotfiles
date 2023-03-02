@@ -1,3 +1,2 @@
 return {
-  'tpope/vim-surround',
 }

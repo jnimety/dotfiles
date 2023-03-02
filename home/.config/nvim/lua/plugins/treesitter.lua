@@ -1,7 +1,7 @@
 return { -- Highlight, edit, and navigate code
   'nvim-treesitter/nvim-treesitter',
   build = ":TSUpdate",
-  event = "BufReadPost",
+  event = { "BufReadPost", "BufNewFile" },
   dependencies = {
     -- Additional text objects via treesitter
     'nvim-treesitter/nvim-treesitter-textobjects',
@@ -17,15 +17,22 @@ return { -- Highlight, edit, and navigate code
       "diff",
       "dockerfile",
       "git_rebase",
+      "gitattributes",
       "gitcommit",
+      "gitignore",
       "help",
       "html",
       "javascript",
       "json",
       "lua",
+      "markdown",
+      "markdown_inline",
       "ruby",
       "rust",
       "scss",
+      "sql",
+      "terraform",
+      "toml",
       "typescript",
       "vim",
       "yaml",
@@ -44,10 +51,10 @@ return { -- Highlight, edit, and navigate code
       additional_vim_regex_highlighting = false,
     },
     indent = {
-      enable = true
+      enable = false
     },
     incremental_selection = {
-      enable = true,
+      enable = false, -- https://github.com/nvim-treesitter/nvim-treesitter/issues/4000
       keymaps = {
         init_selection = '<c-space>',
         node_incremental = '<c-space>',

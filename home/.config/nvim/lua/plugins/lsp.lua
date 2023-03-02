@@ -1,16 +1,6 @@
-local format = function(d)
-  local code = d.code or (d.user_data and d.user_data.lsp.code)
-
-  if code then
-    return string.format("%s [%s]", d.message, code):gsub("1. ", "")
-  end
-
-  return d.message
-end
-
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
-local on_attach = function(_, bufnr)
+local on_attach = function(client, bufnr)
   local builtin = require('telescope.builtin')
 
   local keymap_opts = function(desc)
@@ -25,6 +15,9 @@ local on_attach = function(_, bufnr)
 
   vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, keymap_opts("[R]e[n]ame reference under cursor"))
   vim.keymap.set({ 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, keymap_opts("[C]ode [A]ction"))
+  vim.keymap.set('n', '<leader>ch', vim.lsp.buf.document_highlight,
+    keymap_opts("[C]ode [H]ighlight reference under cursor"))
+  vim.keymap.set('n', "<leader>cl", vim.lsp.codelens.run, keymap_opts("[C]ode [L]ens"))
   vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, keymap_opts("Prev Diagnostic"))
   vim.keymap.set('n', ']d', vim.diagnostic.goto_next, keymap_opts("Next Diagnostic"))
   vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, keymap_opts("Line Diagnostics"))
@@ -47,42 +40,56 @@ local on_attach = function(_, bufnr)
 
   vim.keymap.set('n', '<leader>cf', vim.cmd.Format, keymap_opts("[C]ode [F]ormat Document"))
   vim.keymap.set('v', '<leader>cf', vim.cmd.Format, keymap_opts("[C]ode [F]ormat Range"))
-end
 
--- Special on_attach until neovim supports textDocument/diagnostic
--- https://github.com/Shopify/ruby-lsp/issues/188#issuecomment-1268932965
-local ruby_ls_on_attach = function(client, bufnr)
-  on_attach(client, bufnr)
+  -- `:lua =vim.lsp.get_active_clients()[1].server_capabilities` to list capabilities
+  if client.server_capabilities.documentHighlightProvider then
+    vim.api.nvim_create_autocmd({ "CursorMoved" }, {
+      buffer = bufnr,
+      callback = function()
+        vim.lsp.buf.clear_references()
+      end
+    })
+  end
 
-  vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWritePre', 'CursorHold' }, {
-    buffer = bufnr,
+  if client.server_capabilities.codeLensProvider then
+    vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "InsertLeave" }, {
+      buffer = bufnr,
+      callback = function()
+        vim.lsp.codelens.refresh()
+      end
+    })
+  end
 
-    callback = function()
-      vim.schedule(function()
-        local params = vim.lsp.util.make_text_document_params(bufnr)
+  if client.server_capabilities.diagnosticProvider then
+    vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWritePre', 'CursorHold' }, {
+      buffer = bufnr,
+      callback = function()
+        vim.schedule(function()
+          local params = vim.lsp.util.make_text_document_params(bufnr)
 
-        client.request(
-          'textDocument/diagnostic',
-          { textDocument = params },
-          function(err, result)
-            if err then return end
+          client.request(
+            'textDocument/diagnostic',
+            { textDocument = params },
+            function(err, result)
+              if err then return end
 
-            vim.lsp.diagnostic.on_publish_diagnostics(
-              nil,
-              vim.tbl_extend('keep', params, { diagnostics = result.items }),
-              { client_id = client.id }
-            )
-          end
-        )
-      end)
-    end,
-  })
+              vim.lsp.diagnostic.on_publish_diagnostics(
+                nil,
+                vim.tbl_extend('keep', params, { diagnostics = result.items }),
+                { client_id = client.id }
+              )
+            end
+          )
+        end)
+      end,
+    })
+  end
 end
 
 return {
   {
     "jose-elias-alvarez/null-ls.nvim",
-    event = "BufReadPre",
+    event = { "BufReadPre", "BufNewFile" },
     dependencies = {
       "nvim-lua/plenary.nvim",
       'williamboman/mason.nvim',
@@ -97,7 +104,7 @@ return {
           null_ls.builtins.formatting.prettierd.with({
             filetypes = {
               "css", "scss", "less",
-              "html",
+              "html", "haml",
               "yaml",
               "markdown", "markdown.mdx",
               "graphql",
@@ -105,10 +112,19 @@ return {
             }
           }),
           null_ls.builtins.diagnostics.haml_lint.with({
+            command = { "bundle", "exec", "haml-lint" },
             env = {
               RUBYOPT = "-W0",
             }
           }),
+          -- null_ls.builtins.diagnostics.codespell.with({
+          --   filetypes = { "gitcommit", "markdown", "txt" }
+          -- }),
+          null_ls.builtins.formatting.codespell.with({
+            filetypes = { "gitcommit", "markdown", "txt" }
+          }),
+          null_ls.builtins.diagnostics.fish,
+          null_ls.builtins.formatting.fish_indent,
         },
       }
     end,
@@ -126,7 +142,7 @@ return {
   {
     'neovim/nvim-lspconfig',
     cmd = "LspInfo",
-    event = "BufReadPre",
+    event = { "BufReadPre", "BufNewFile" },
     dependencies = {
       -- Automatically install LSPs to stdpath for neovim
       'williamboman/mason.nvim',
@@ -142,32 +158,35 @@ return {
         signs = {
           active = true,
           values = {
-            { name = "DiagnosticSignError", text = "" },
-            { name = "DiagnosticSignWarn", text = "" },
-            { name = "DiagnosticSignHint", text = "" },
-            { name = "DiagnosticSignInfo", text = "" },
+            { name = "DiagnosticSignError", text = require("defaults").icons.diagnostics.Error },
+            { name = "DiagnosticSignWarn",  text = require("defaults").icons.diagnostics.Warn },
+            { name = "DiagnosticSignHint",  text = require("defaults").icons.diagnostics.Hint },
+            { name = "DiagnosticSignInfo",  text = require("defaults").icons.diagnostics.Info },
           },
         },
         virtual_text = {
-          format = format
+          -- format = format,
+          spacing = 4,
+          prefix = "●"
         },
         severity_sort = true,
         float = {
           focusable = true,
-          style = "minimal",
-          border = "single",
+          focus = true,
+          -- style = "minimal",
+          border = "rounded",
           source = "always",
-          header = "",
-          prefix = "",
-          format = format,
+          -- header = "",
+          -- prefix = "",
+          -- format = format,
         }
       })
 
       local float_config = {
         focusable = true,
-        focus = false,
-        style = "minimal",
-        border = "single",
+        focus = true,
+        -- style = "minimal",
+        border = "rounded",
         source = "if_many",
       }
       vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, float_config)
@@ -178,7 +197,7 @@ return {
 
       local lspconfig = require('lspconfig')
       local servers_with_defaults = {
-        "dockerls", "rust_analyzer", "terraformls", "yamlls"
+        "bashls", "cspell", "cssls", "dockerls", "terraformls", "yamlls"
       }
 
       for _, server in pairs(servers_with_defaults) do
@@ -191,15 +210,13 @@ return {
       lspconfig.eslint.setup {
         on_attach = on_attach,
         capabilities = capabilities,
-        -- yarn pnp compatible way of running js language server, see package.json:scripts
-        cmd = { "yarn", "pnp-vscode-eslint-language-server", "--stdio" },
+        cmd = { "pnpm", "pnp-vscode-eslint-language-server", "--stdio" },
       }
 
       lspconfig.jsonls.setup {
         on_attach = on_attach,
         capabilities = capabilities,
-        -- yarn pnp compatible way of running js language server, see package.json:scripts
-        cmd = { "yarn", "pnp-vscode-json-language-server", "--stdio" },
+        cmd = { "pnpm", "pnp-vscode-json-language-server", "--stdio" },
       }
 
       lspconfig.sorbet.setup {
@@ -213,10 +230,11 @@ return {
       --   on_attach = on_attach,
       --   capabilities = capabilities,
       --   filetypes = { "ruby", "eruby", "rbs" },
+      --   cmd = { "bundle", "exec", "steep", "langserver" },
       -- }
 
       lspconfig.ruby_ls.setup {
-        on_attach = ruby_ls_on_attach,
+        on_attach = on_attach,
         capabilities = capabilities,
         cmd = { "bundle", "exec", "ruby-lsp" },
         init_options = {
@@ -240,8 +258,7 @@ return {
       lspconfig.stylelint_lsp.setup {
         on_attach = on_attach,
         capabilities = capabilities,
-        -- yarn pnp compatible way of running js language server, see package.json:scripts
-        cmd = { "yarn", "pnp-stylelint-lsp", "--stdio" },
+        cmd = { "pnpm", "pnp-stylelint-lsp", "--stdio" },
         filetypes = {
           'css',
           'less',
@@ -263,11 +280,16 @@ return {
       table.insert(runtime_path, 'lua/?.lua')
       table.insert(runtime_path, 'lua/?/init.lua')
 
-      lspconfig.sumneko_lua.setup {
+      lspconfig.lua_ls.setup {
         on_attach = on_attach,
         capabilities = capabilities,
         settings = {
           Lua = {
+            format = {
+              -- format settings go in ~/.editorconfig or a project specific .editorconfig
+              -- options specific to this formatter: https://github.com/CppCXY/EmmyLuaCodeStyle/blob/master/lua.template.editorconfig
+              enable = true,
+            },
             runtime = {
               -- Tell the language server which version of Lua you're using (most likely LuaJIT)
               version = 'LuaJIT',
@@ -276,6 +298,9 @@ return {
             },
             diagnostics = {
               globals = { 'vim' },
+              neededFileStatus = {
+                ["codestyle-check"] = "Any",
+              },
             },
             workspace = {
               library = vim.api.nvim_get_runtime_file('', true),
@@ -290,8 +315,16 @@ return {
       lspconfig.tsserver.setup {
         on_attach = on_attach,
         capabilities = capabilities,
-        -- yarn pnp compatible way of running js language server, see package.json:scripts
-        cmd = { "yarn", "pnp-typescript-language-server", "--stdio" },
+        cmd = { "pnpm", "pnp-typescript-language-server", "--stdio" },
+        settings = {
+          typescript = {
+            format = {
+              insertSpaceAfterOpeningAndBeforeClosingEmptyBraces = false,
+              insertSpaceAfterFunctionKeywordForAnonymousFunctions = true,
+              semicolons = "insert",
+            }
+          }
+        }
       }
     end
   },
@@ -304,8 +337,13 @@ return {
     },
     opts = {
       ensure_installed = {
+        -- "codespell",
+        -- "haml-lint", -- add to project Gemfile instead
         "prettierd",
-        "haml-lint",
+      },
+      ui = {
+        check_outdated_packages_on_open = false,
+        border = "rounded",
       },
     },
     config = function(_, opts)
@@ -321,14 +359,16 @@ return {
 
       require("mason-lspconfig").setup({
         ensure_installed = {
+          "bashls",
+          "cssls",
           "dockerls",
           "eslint",
           "jsonls",
-          "ruby_ls",
+          -- "ruby_ls", -- add to project Gemfile instead
           "rust_analyzer",
-          "sorbet",
+          -- "sorbet", -- add to project Gemfile instead
           "stylelint_lsp",
-          "sumneko_lua",
+          "lua_ls",
           "terraformls",
           "tsserver",
           "yamlls",
@@ -341,5 +381,68 @@ return {
         automatic_setup = false,
       })
     end,
+  },
+
+  {
+    "simrat39/rust-tools.nvim",
+    dependencies = {
+      "neovim/nvim-lspconfig",
+    },
+    opts = {
+      -- rust-tools options
+      tools = {
+        autoSetHints = true,
+        inlay_hints = {
+          show_parameter_hints = true,
+          parameter_hints_prefix = "<- ",
+          other_hints_prefix = "=> "
+        }
+      },
+
+      -- all the opts to send to nvim-lspconfig
+      -- these override the defaults set by rust-tools.nvim
+      --
+      -- REFERENCE:
+      -- https://github.com/rust-analyzer/rust-analyzer/blob/master/docs/user/generated_config.adoc
+      -- https://rust-analyzer.github.io/manual.html#configuration
+      -- https://rust-analyzer.github.io/manual.html#features
+      --
+      -- NOTE: The configuration format is `rust-analyzer.<section>.<property>`.
+      --       <section> should be an object.
+      --       <property> should be a primitive.
+      server = {
+        on_attach = function(client, bufnr)
+          on_attach(client, bufnr)
+
+          local bufopts = { noremap = true, silent = true, buffer = bufnr }
+
+          vim.keymap.set('n', '<leader><leader>rr', "<cmd>RustRunnables<cr>", bufopts)
+          vim.keymap.set('n', 'K', "<cmd>RustHoverActions<cr>", bufopts)
+        end,
+
+        ["rust-analyzer"] = {
+          -- to enable rust-analyzer settings visit:
+          -- https://github.com/rust-analyzer/rust-analyzer/blob/master/docs/user/generated_config.adoc
+          assist = {
+            importEnforceGranularity = true,
+            importPrefix = "create"
+          },
+          cargo = {
+            allFeatures = true
+          },
+          checkOnSave = {
+            -- default: `cargo check`
+            command = "clippy",
+            allFeatures = true
+          }
+        },
+        inlayHints = {
+          lifetimeElisionHints = {
+            enable = true,
+            useParameterNames = true
+          }
+        }
+      }
+    },
   },
 }

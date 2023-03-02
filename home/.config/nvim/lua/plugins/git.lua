@@ -1,17 +1,17 @@
 return {
   'lewis6991/gitsigns.nvim',
-  event = "BufReadPre",
+  event = { "BufReadPre", "BufNewFile" },
   dependencies = {
     'tpope/vim-fugitive',
     'tpope/vim-rhubarb',
   },
   opts = {
     signs = {
-      add = { text = '+' },
-      change = { text = '~' },
-      delete = { text = '_' },
-      topdelete = { text = '‾' },
-      changedelete = { text = '~' },
+      add = { text = require("defaults").icons.git.add },
+      change = { text = require("defaults").icons.git.change },
+      delete = { text = require("defaults").icons.git.delete },
+      topdelete = { text = require("defaults").icons.git.topdelete },
+      changedelete = { text = require("defaults").icons.git.changedelete },
     },
     on_attach = function(bufnr)
       local gs = package.loaded.gitsigns

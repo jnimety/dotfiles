@@ -1,7 +1,3 @@
--- recommended by nvim-tree
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
-
 require("options")
 require("keymaps")
 require("autocmds")
@@ -20,7 +16,12 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-vim.g.mapleader = " " -- make sure to set `mapleader` before lazy so your mappings are correct
-
 -- https://github.com/folke/lazy.nvim#-structuring-your-plugins
-require("lazy").setup("plugins")
+require("lazy").setup(
+  "plugins",
+  {
+    ui = {
+      border = "rounded",
+    },
+  }
+)

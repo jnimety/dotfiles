@@ -3,7 +3,7 @@ vim.api.nvim_create_autocmd("FileType", {
   pattern = {
     "qf",
     "help",
-    "man",
+    --  "man",
     "notify",
     "lspinfo",
     "spectre_panel",
@@ -33,6 +33,7 @@ vim.api.nvim_create_autocmd("FileType", {
   pattern = {
     "gitcommit",
     "markdown",
+    "txt"
   },
   callback = function(_)
     vim.opt_local.wrap = true
@@ -44,11 +45,16 @@ return {
   "nathom/filetype.nvim",
   opts = {
     overrides = {
+      complex = {
+        ["%.gitignore"] = "gitignore",
+        ["%.gitattributes"] = "gitattributes",
+      },
       extensions = {
         tf = "terraform",
         tfvars = "terraform",
         tfstate = "json",
         rbi = "ruby",
+        inky = "eruby",
       },
     },
   },

@@ -2,7 +2,8 @@ export EDITOR=vim
 export ZSH=$HOME/.oh-my-zsh
 export ZSH_CUSTOM=$HOME/.oh-my-zsh-custom
 export ZSH_THEME="jnimety"
-plugins=(git git-flow rails ruby macos gem vi-mode rvm bundler terraform)
+VI_MODE_SET_CURSOR=true
+plugins=(zsh-autosuggestions zsh-syntax-highlighting bundler rails ruby macos vi-mode rvm terraform)
 
 source $ZSH/oh-my-zsh.sh
 
