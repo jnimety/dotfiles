@@ -1,14 +1,14 @@
-local filetypes = { "css", "scss" }
+local filetypes = { "css", "scss", "haml" }
 
 return {
-  "NvChad/nvim-colorizer.lua",
+  "catgoose/nvim-colorizer.lua",
+  event = "BufReadPre",
   ft = filetypes,
   opts = {
     filetypes = filetypes,
     user_default_options = {
       RGB = true, -- #RGB hex codes
       RRGGBB = true, -- #RRGGBB hex codes
-      css = false,
       rgb_fn = true,
       hsl_fn = true,
       mode = "virtualtext",
@@ -25,7 +25,9 @@ return {
           names = false,
         },
       },
-      virtualtext = "",
+      tailwind = "lsp",
+      virtualtext = "⬤", -- "■"
+      virtualtext_inline = true,
     },
   },
 }
