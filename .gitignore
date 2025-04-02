@@ -10,3 +10,6 @@ home/.vim/spell
 home/.vim/backup
 home/.vim/plugged
 home/.vim/local
+home/.config/opencpn
+home/.config/github-copilot/hosts.json
+home/.config/gh/hosts.yml

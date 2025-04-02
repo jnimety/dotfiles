@@ -4,9 +4,9 @@ function find_config -a file
   # 2. If X has a parent directory, change X to parent. GO TO 1
   # 3. Return NULL.
 
-  if test -e $file
+  if test -e "$file"
     printf '%s\n' (string trim -r -c / (pwd))
-  else if test (dirname (realpath $file)) = $HOME
+  else if test (realpath (dirname $file)) = $HOME
     false
   else
     # a subshell so that we don't affect the caller's $PWD

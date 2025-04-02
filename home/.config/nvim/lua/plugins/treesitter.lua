@@ -1,12 +1,26 @@
 return { -- Highlight, edit, and navigate code
-  'nvim-treesitter/nvim-treesitter',
+  "nvim-treesitter/nvim-treesitter",
   build = ":TSUpdate",
   event = { "BufReadPost", "BufNewFile" },
+  cmd = { "TSUpdateSync", "TSUpdate", "TSInstall" },
+  keys = {
+    { "<c-space>", desc = "Increment selection" },
+    { "<c-backspace>", desc = "Decrement selection", mode = "x" },
+  },
+  init = function(plugin)
+    -- PERF: add nvim-treesitter queries to the rtp and it's custom query predicates early
+    -- This is needed because a bunch of plugins no longer `require("nvim-treesitter")`, which
+    -- no longer trigger the **nvim-treeitter** module to be loaded in time.
+    -- Luckily, the only thins that those plugins need are the custom queries, which we make available
+    -- during startup.
+    require("lazy.core.loader").add_to_rtp(plugin)
+    require("nvim-treesitter.query_predicates")
+  end,
   dependencies = {
     -- Additional text objects via treesitter
-    'nvim-treesitter/nvim-treesitter-textobjects',
-    'RRethy/nvim-treesitter-endwise',
-    'nvim-treesitter/playground',
+    "nvim-treesitter/nvim-treesitter-textobjects",
+    "RRethy/nvim-treesitter-endwise",
+    "nvim-treesitter/playground",
   },
   opts = {
     -- A list of parser names, or "all"
@@ -16,25 +30,31 @@ return { -- Highlight, edit, and navigate code
       -- "css",
       "diff",
       "dockerfile",
+      "fish",
       "git_rebase",
       "gitattributes",
       "gitcommit",
       "gitignore",
-      "help",
+      "hcl",
       "html",
       "javascript",
       "json",
       "lua",
       "markdown",
       "markdown_inline",
+      "ocaml",
+      "query",
+      "regex",
       "ruby",
       "rust",
       "scss",
       "sql",
       "terraform",
       "toml",
+      "tsx",
       "typescript",
       "vim",
+      "vimdoc",
       "yaml",
     },
 
@@ -51,15 +71,15 @@ return { -- Highlight, edit, and navigate code
       additional_vim_regex_highlighting = false,
     },
     indent = {
-      enable = false
+      enable = true,
     },
     incremental_selection = {
       enable = false, -- https://github.com/nvim-treesitter/nvim-treesitter/issues/4000
       keymaps = {
-        init_selection = '<c-space>',
-        node_incremental = '<c-space>',
-        scope_incremental = '<c-s>',
-        node_decremental = '<c-backspace>',
+        init_selection = "<c-space>",
+        node_incremental = "<c-space>",
+        scope_incremental = false,
+        node_decremental = "<c-backspace>",
       },
     },
     textobjects = {
@@ -68,32 +88,32 @@ return { -- Highlight, edit, and navigate code
         lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
         keymaps = {
           -- You can use the capture groups defined in textobjects.scm
-          ['aa'] = '@parameter.outer',
-          ['ia'] = '@parameter.inner',
-          ['af'] = '@function.outer',
-          ['if'] = '@function.inner',
-          ['ac'] = '@class.outer',
-          ['ic'] = '@class.inner',
+          ["aa"] = "@parameter.outer",
+          ["ia"] = "@parameter.inner",
+          ["af"] = "@function.outer",
+          ["if"] = "@function.inner",
+          ["ac"] = "@class.outer",
+          ["ic"] = "@class.inner",
         },
       },
       move = {
         enable = true,
         set_jumps = true, -- whether to set jumps in the jumplist
         goto_next_start = {
-          [']m'] = '@function.outer',
-          [']]'] = '@class.outer',
+          ["]m"] = "@function.outer",
+          ["]]"] = "@class.outer",
         },
         goto_next_end = {
-          [']M'] = '@function.outer',
-          [']['] = '@class.outer',
+          ["]M"] = "@function.outer",
+          ["]["] = "@class.outer",
         },
         goto_previous_start = {
-          ['[m'] = '@function.outer',
-          ['[['] = '@class.outer',
+          ["[m"] = "@function.outer",
+          ["[["] = "@class.outer",
         },
         goto_previous_end = {
-          ['[M'] = '@function.outer',
-          ['[]'] = '@class.outer',
+          ["[M"] = "@function.outer",
+          ["[]"] = "@class.outer",
         },
       },
       playground = {
@@ -102,10 +122,10 @@ return { -- Highlight, edit, and navigate code
       swap = {
         enable = true,
         swap_next = {
-          ['<leader>a'] = '@parameter.inner',
+          ["<leader>a"] = "@parameter.inner",
         },
         swap_previous = {
-          ['<leader>A'] = '@parameter.inner',
+          ["<leader>A"] = "@parameter.inner",
         },
       },
     },
@@ -115,7 +135,7 @@ return { -- Highlight, edit, and navigate code
     vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
     vim.opt.foldenable = false
 
-    require('nvim-treesitter').setup()
+    require("nvim-treesitter").setup()
     require("nvim-treesitter.configs").setup(opts)
-  end
+  end,
 }

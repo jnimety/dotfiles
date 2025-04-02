@@ -8,10 +8,11 @@ return {
   },
   {
     "rcarriga/nvim-dap-ui",
+    dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" },
     lazy = true,
     opts = {
       {
-        floating = { border = "rounded" }
+        floating = { border = "rounded" },
       },
       layouts = {
         {
@@ -30,16 +31,26 @@ return {
       "rcarriga/nvim-dap-ui",
     },
     keys = {
-      {"<leader>ds", function() require("dap").continue() end, desc = "[D]ebugger [S]tart" },
-      {"<leader>de", function ()
-        local dap = require("dap")
-        local virtual_text = require('nvim-dap-virtual-text/virtual_text')
+      {
+        "<leader>ds",
+        function()
+          require("dap").continue()
+        end,
+        desc = "[D]ebugger [S]tart",
+      },
+      {
+        "<leader>de",
+        function()
+          local dap = require("dap")
+          local virtual_text = require("nvim-dap-virtual-text/virtual_text")
 
-        dap.disconnect()
-        dap.close()
-        dap.repl.close()
-        virtual_text.clear_virtual_text()
-      end, desc = "[D]ebugger [E]xit" },
+          dap.disconnect()
+          dap.close()
+          dap.repl.close()
+          virtual_text.clear_virtual_text()
+        end,
+        desc = "[D]ebugger [E]xit",
+      },
     },
     config = function()
       local dap = require("dap")
@@ -47,9 +58,9 @@ return {
       dap.defaults.focus_terminal = true
 
       dap.adapters.ruby = {
-        type = 'server';
-        host = '127.0.0.1';
-        port = 38698;
+        type = "server",
+        host = "127.0.0.1",
+        port = 38698,
       }
 
       dap.configurations.ruby = {
@@ -58,10 +69,10 @@ return {
           name = "debug remote",
           request = "attach",
           options = {
-            source_filetype = 'ruby',
+            source_filetype = "ruby",
           },
           waiting = 1000,
-        }
+        },
       }
 
       dap.configurations.haml = {
@@ -70,9 +81,9 @@ return {
           name = "debug remote",
           request = "attach",
           options = {
-            source_filetype = 'haml',
+            source_filetype = "haml",
           },
-        }
+        },
       }
 
       local dapui = require("dapui")
@@ -81,6 +92,6 @@ return {
       dap.listeners.after.event_initialized["dapui_config"] = dapui.open
       dap.listeners.before.event_terminated["dapui_config"] = dapui.close
       dap.listeners.before.event_exited["dapui_config"] = dapui.close
-    end
+    end,
   },
 }

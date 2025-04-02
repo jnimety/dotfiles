@@ -99,3 +99,9 @@ class Hash
     "#{self.size} key-value pairs written to #{filename}"
   end
 end
+
+Reline::Face.config(:completion_dialog) do |conf|
+  conf.define :default, foreground: :bright_white, background: :bright_black
+  conf.define :enhanced, foreground: :black, background: :magenta
+  conf.define :scrollbar, foreground: :white, background: :blue
+end

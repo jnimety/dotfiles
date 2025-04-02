@@ -12,7 +12,7 @@ vim.g.loaded_perl_provider = 0
 vim.g.loaded_node_provider = 0
 vim.g.loaded_python3_provider = 0
 
-vim.opt.backspace = '2'
+vim.opt.backspace = "2"
 vim.opt.showcmd = true
 vim.opt.laststatus = 2
 vim.opt.autowrite = true
@@ -32,14 +32,14 @@ vim.opt.backupdir = vim.fs.normalize("~/.vim/backup")
 vim.opt.directory = vim.fs.normalize("~/.vim/backup")
 
 -- Disable swap files
-vim.cmd [[ set noswapfile ]]
+vim.cmd([[ set noswapfile ]])
 
 -- Line numbers
 vim.wo.number = true
 vim.wo.relativenumber = true
 
 vim.o.updatetime = 250
-vim.wo.signcolumn = 'yes'
+vim.wo.signcolumn = "yes"
 
 vim.opt.completeopt = "menu,menuone,noselect"
 
@@ -60,8 +60,8 @@ vim.opt.splitright = true -- Put new windows right of current
 vim.opt.pumblend = 10 -- Popup blend
 vim.opt.pumheight = 10 -- Maximum number of entries in a popup
 
-vim.opt.shortmess:append { W = true, I = true, c = true }
+vim.opt.shortmess:append({ W = true, I = true, c = true })
 if vim.fn.has("nvim-0.9.0") == 1 then
   vim.opt.splitkeep = "screen"
-  vim.opt.shortmess:append { C = true }
+  vim.opt.shortmess:append({ C = true })
 end

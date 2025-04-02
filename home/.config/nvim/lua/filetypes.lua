@@ -41,21 +41,16 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
-return {
-  "nathom/filetype.nvim",
-  opts = {
-    overrides = {
-      complex = {
-        ["%.gitignore"] = "gitignore",
-        ["%.gitattributes"] = "gitattributes",
-      },
-      extensions = {
-        tf = "terraform",
-        tfvars = "terraform",
-        tfstate = "json",
-        rbi = "ruby",
-        inky = "eruby",
-      },
-    },
+vim.filetype.add({
+  pattern = {
+    ["%.gitignore"] = "gitignore",
+    ["%.gitattributes"] = "gitattributes",
   },
-}
+  extension = {
+    tf = "terraform",
+    tfvars = "terraform",
+    tfstate = "json",
+    rbi = "ruby",
+    inky = "eruby",
+  }
+})

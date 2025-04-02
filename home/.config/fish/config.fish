@@ -2,6 +2,7 @@ fish_add_path /opt/homebrew/bin
 fish_add_path /opt/homebrew/sbin
 fish_add_path --append $HOME/.bin
 fish_add_path --append $HOME/.local/bin
+fish_add_path /opt/homebrew/opt/ruby/bin
 
 set -g fish_term24bit 1
 set -U fish_greeting ""

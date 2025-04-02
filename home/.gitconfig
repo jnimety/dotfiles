@@ -6,3 +6,5 @@
   path = ~/.gitconfig.d/user
   path = ~/.gitconfig.d/local
   path = ~/.gitconfig.d/gitflow
+[advice]
+	skippedCherryPicks = false
