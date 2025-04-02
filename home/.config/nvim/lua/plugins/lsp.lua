@@ -162,7 +162,7 @@ return {
         "bashls",
         -- "cssls",
         "dockerls",
-        "ocamllsp",
+        -- "ocamllsp",
         "openscad_lsp",
         "tailwindcss",
         "terraformls",
@@ -351,6 +351,7 @@ return {
       end
 
       require("mason-lspconfig").setup({
+        automatic_installation = false,
         ensure_installed = {
           "bashls",
           -- "cssls",
