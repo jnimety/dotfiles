@@ -33,10 +33,12 @@ return {
       -- use 'hrsh7th/cmp-nvim-lua',
       "hrsh7th/cmp-cmdline",
       "zbirenbaum/copilot-cmp",
+      { "roobert/tailwindcss-colorizer-cmp.nvim", opts = {} },
     },
     opts = function()
       local cmp = require("cmp")
       local luasnip = require("luasnip")
+      local tailwindcss_colorizer_cmp = require("tailwindcss-colorizer-cmp")
 
       return {
         snippet = {
@@ -99,7 +101,7 @@ return {
               copilot = "[Copilot]",
             })[entry.source.name]
 
-            return vim_item
+            return tailwindcss_colorizer_cmp.formatter(entry, vim_item)
           end,
         },
         experimental = {

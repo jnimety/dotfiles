@@ -25,7 +25,7 @@ return {
           names = false,
         },
       },
-      virtualtext = ""
-    }
+      virtualtext = "",
+    },
   },
 }
