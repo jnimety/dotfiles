@@ -326,13 +326,17 @@ return {
     opts = {
       ensure_installed = {
         "codespell",
+        "eslint-lsp",
+        "json-lsp",
         -- "haml-lint", -- add to project Gemfile instead
         "hadolint",
         "helm-ls",
         "openscad-lsp",
         "prettierd",
         "stylua",
+        "stylelint-lsp",
         "sql-formatter",
+        "typescript-language-server",
       },
       ui = {
         check_outdated_packages_on_open = false,
