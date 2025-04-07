@@ -233,24 +233,24 @@ return {
         },
       })
 
-      -- lspconfig.stylelint_lsp.setup({
-      --   capabilities = capabilities,
-      --   cmd = { "pnpm", "pnp-stylelint-lsp", "--stdio" },
-      --   filetypes = {
-      --     "css",
-      --     "less",
-      --     "postcss",
-      --     "scss",
-      --   },
-      --   settings = {
-      --     stylelintplus = {
-      --       enable = true,
-      --       autoFixOnFormat = true,
-      --       cssInJs = false,
-      --       validateOnType = true,
-      --     },
-      --   },
-      -- })
+      lspconfig.stylelint_lsp.setup({
+        capabilities = capabilities,
+        cmd = { "pnpm", "pnp-stylelint-lsp", "--stdio" },
+        filetypes = {
+          "css",
+          "less",
+          "postcss",
+          "scss",
+        },
+        settings = {
+          stylelintplus = {
+            enable = true,
+            autoFixOnFormat = true,
+            cssInJs = false,
+            validateOnType = true,
+          },
+        },
+      })
 
       -- Make runtime files discoverable to the server
       local runtime_path = vim.split(package.path, ";")
@@ -366,7 +366,7 @@ return {
           -- "ruby_ls", -- add to project Gemfile instead
           "rust_analyzer",
           -- "sorbet", -- add to project Gemfile instead
-          -- "stylelint_lsp",
+          "stylelint_lsp",
           "lua_ls",
           "tailwindcss",
           "terraformls",
