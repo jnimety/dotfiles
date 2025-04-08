@@ -164,7 +164,7 @@ return {
         "dockerls",
         -- "ocamllsp",
         "openscad_lsp",
-        "tailwindcss",
+        -- "tailwindcss", -- setup via tailwind-tools
         "terraformls",
         "yamlls",
       }
@@ -361,7 +361,7 @@ return {
           -- "cssls",
           "dockerls",
           "eslint",
-          "hadolint",
+          -- "hadolint",
           "jsonls",
           -- "ruby_ls", -- add to project Gemfile instead
           "rust_analyzer",
@@ -370,7 +370,7 @@ return {
           "lua_ls",
           "tailwindcss",
           "terraformls",
-          "tsserver",
+          "ts_ls",
           "yamlls",
         },
       })
@@ -381,6 +381,17 @@ return {
     "williamboman/mason-lspconfig.nvim",
   },
 
+  {
+    "luckasRanarison/tailwind-tools.nvim",
+    name = "tailwind-tools",
+    build = ":UpdateRemotePlugins",
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+      "nvim-telescope/telescope.nvim", -- optional
+      "neovim/nvim-lspconfig", -- optional
+    },
+    opts = {}, -- your configuration
+  },
   {
     "simrat39/rust-tools.nvim",
     dependencies = {

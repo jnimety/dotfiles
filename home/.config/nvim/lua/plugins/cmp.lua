@@ -33,12 +33,11 @@ return {
       -- use 'hrsh7th/cmp-nvim-lua',
       "hrsh7th/cmp-cmdline",
       "zbirenbaum/copilot-cmp",
-      { "roobert/tailwindcss-colorizer-cmp.nvim", opts = {} },
+      "tailwind-tools",
     },
     opts = function()
       local cmp = require("cmp")
       local luasnip = require("luasnip")
-      local tailwindcss_colorizer_cmp = require("tailwindcss-colorizer-cmp")
 
       return {
         snippet = {
@@ -89,7 +88,9 @@ return {
         formatting = {
           format = function(entry, vim_item)
             local kind_icons = require("defaults").icons.kinds
+            local tailwind_tools = require("tailwind-tools.cmp")
 
+            vim_item = tailwind_tools.lspkind_format(entry, vim_item)
             vim_item.kind = string.format("%s %s", kind_icons[vim_item.kind], vim_item.kind) -- This concatonates the icons with the name of the item kind
             -- Source
             vim_item.menu = ({
@@ -101,7 +102,7 @@ return {
               copilot = "[Copilot]",
             })[entry.source.name]
 
-            return tailwindcss_colorizer_cmp.formatter(entry, vim_item)
+            return vim_item
           end,
         },
         experimental = {
