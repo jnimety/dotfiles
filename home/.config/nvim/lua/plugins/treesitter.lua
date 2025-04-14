@@ -26,8 +26,7 @@ return { -- Highlight, edit, and navigate code
     -- A list of parser names, or "all"
     ensure_installed = {
       "bash",
-      -- NOTE: css might have a trojan: https://github.com/tree-sitter/tree-sitter-css/issues/35
-      -- "css",
+      "css",
       "diff",
       "dockerfile",
       "fish",
