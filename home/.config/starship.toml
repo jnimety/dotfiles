@@ -1,0 +1,72 @@
+format = """
+[░▒▓](blue)\
+$username\
+[](bg:gray fg:blue)\
+$directory\
+[](fg:gray bg:dark_gray)\
+$git_branch\
+$git_status\
+$nodejs\
+$rust\
+$ruby\
+[](fg:dark_gray bg:background)\
+\n$character"""
+
+palette = 'tokyonight_night'
+
+[palettes.tokyonight_night]
+background = '#1a1b26'
+blue = '#7aa2f7'
+dark_gray = '#212736'
+gray = '#3b4261'
+nodejs_green = '#68a063'
+ruby_red = '#cc342d'
+rust_orange = '#d34516'
+
+[character]
+success_symbol = "[❯](blue)"
+error_symbol = "[❯](blue)"
+vimcmd_symbol = "[❮](blue)"
+
+[username]
+show_always = true
+style_user = "bg:blue fg:background"
+style_root = "bg:ruby_red fg:white"
+format = '[ $user ]($style)'
+
+[directory]
+style = "fg:blue bg:gray"
+format = "[ $path ]($style)"
+truncation_length = 3
+truncation_symbol = "…/"
+
+[directory.substitutions]
+"Documents" = "󰈙 "
+"Downloads" = " "
+"Music" = " "
+"Pictures" = " "
+
+[git_branch]
+symbol = ""
+style = "bg:dark_gray"
+format = '[[ $symbol $branch ](fg:yellow bg:dark_gray)]($style)'
+
+[git_status]
+style = "bg:dark_gray"
+format = '[[($all_status$ahead_behind )](fg:yellow bg:dark_gray)]($style)'
+
+[nodejs]
+symbol = "󰎙"
+style = "bg:dark_gray"
+format = '[[ $symbol ($version) ](fg:nodejs_green bg:dark_gray)]($style)'
+
+[rust]
+# symbol = ""
+symbol = "🦀"
+style = "bg:dark_gray"
+format = '[[ $symbol ($version) ](fg:rust_orange bg:dark_gray)]($style)'
+
+[ruby]
+symbol = ""
+style = "bg:dark_gray"
+format = '[[ $symbol ($version) ](fg:ruby_red bg:dark_gray)]($style)'

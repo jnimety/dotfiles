@@ -25,7 +25,7 @@ vim.api.nvim_create_autocmd("FileType", {
     -- Temporary, not quite perfect, workaround for:
     -- https://github.com/nvim-treesitter/nvim-treesitter/issues/3363
     -- https://github.com/tree-sitter/tree-sitter-ruby/issues/230
-    vim.cmd [[ setlocal indentkeys-=. ]]
+    vim.cmd([[ setlocal indentkeys-=. ]])
   end,
 })
 
@@ -33,7 +33,7 @@ vim.api.nvim_create_autocmd("FileType", {
   pattern = {
     "gitcommit",
     "markdown",
-    "txt"
+    "txt",
   },
   callback = function(_)
     vim.opt_local.wrap = true
@@ -52,5 +52,5 @@ vim.filetype.add({
     tfstate = "json",
     rbi = "ruby",
     inky = "eruby",
-  }
+  },
 })

@@ -1,35 +1,44 @@
 return {
-  -- Better `vim.notify()`
   {
-    "rcarriga/nvim-notify",
+    "folke/snacks.nvim",
+    priority = 1000,
+    lazy = false,
+    ---@type snacks.Config
+    opts = {
+      -- indent = { enabled = true },
+      -- input = { enabled = true },
+      picker = { enabled = true },
+      notifier = { enabled = true },
+      scope = { enabled = true },
+      -- scroll = { enabled = true },
+      statuscolumn = { enabled = true },
+      -- toggle = { map = LazyVim.safe_keymap_set },
+      words = { enabled = true },
+    },
     keys = {
+      {
+        "<leader>n",
+        function()
+          if Snacks.config.picker and Snacks.config.picker.enabled then
+            Snacks.picker.notifications()
+          else
+            Snacks.notifier.show_history()
+          end
+        end,
+        desc = "Notification History",
+      },
       {
         "<leader>un",
         function()
-          require("notify").dismiss({ silent = true, pending = true })
+          Snacks.notifier.hide()
         end,
-        desc = "Delete all Notifications",
+        desc = "Dismiss All Notifications",
       },
     },
-    opts = {
-      timeout = 3000,
-      max_height = function()
-        return math.floor(vim.o.lines * 0.75)
-      end,
-      max_width = function()
-        return math.floor(vim.o.columns * 0.75)
-      end,
-    },
-    config = function(_, opts)
-      local notify = require("notify")
-      notify.setup(opts)
-
-      vim.notify = notify
-    end,
   },
 
   {
-    'nvim-tree/nvim-web-devicons',
+    "nvim-tree/nvim-web-devicons",
     opts = {
       -- your personnal icons can go here (to override)
       -- you can specify color or cterm_color instead of specifying both of them
@@ -46,9 +55,9 @@ return {
   },
 
   {
-    'nvim-lualine/lualine.nvim',
+    "nvim-lualine/lualine.nvim",
     event = "VeryLazy",
-    dependencies = { 'nvim-tree/nvim-web-devicons' },
+    dependencies = { "nvim-tree/nvim-web-devicons" },
     opts = function()
       local icons = require("defaults").icons
 
@@ -72,12 +81,14 @@ return {
               },
             },
             { "filetype", icon_only = true, separator = "", padding = { left = 1, right = 0 } },
-            { "filename", path = 1,
+            {
+              "filename",
+              path = 1,
               symbols = {
                 modified = icons.lualine.modified,
                 readonly = icons.lualine.readonly,
-                unnamed = icons.lualine.unnamed
-              }
+                unnamed = icons.lualine.unnamed,
+              },
             },
           },
           lualine_x = {
@@ -102,7 +113,7 @@ return {
 
   {
     "akinsho/bufferline.nvim",
-    dependencies = { 'nvim-tree/nvim-web-devicons' },
+    dependencies = { "nvim-tree/nvim-web-devicons" },
     event = "VeryLazy",
     opts = {
       options = {

@@ -4,6 +4,7 @@ home/.vim/.netrwhist
 home/.gitconfig.d/user
 home/.gitconfig.d/local
 home/.tmux/plugins
+home/.config/tmux/tmux-tokyo-night/
 !home/.tmux/plugins/tpm
 home/.tmux/user.conf
 home/.vim/spell
@@ -12,4 +13,5 @@ home/.vim/plugged
 home/.vim/local
 home/.config/opencpn
 home/.config/github-copilot/hosts.json
+home/.config/github-copilot/apps.json
 home/.config/gh/hosts.yml

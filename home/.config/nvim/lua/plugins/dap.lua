@@ -11,9 +11,6 @@ return {
     dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" },
     lazy = true,
     opts = {
-      {
-        floating = { border = "rounded" },
-      },
       layouts = {
         {
           elements = { "repl" },

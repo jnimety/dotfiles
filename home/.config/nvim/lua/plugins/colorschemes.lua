@@ -1,6 +1,6 @@
 return {
   {
-    'ellisonleao/gruvbox.nvim',
+    "ellisonleao/gruvbox.nvim",
     lazy = true,
     priority = 1000, -- make sure to load this before all the other start plugins
     opts = {
@@ -37,10 +37,14 @@ return {
       },
 
       styles = { -- Give comments style such as bold, italic, underline etc.
-        comments = { --[[ italic = true ]] },
-        strings = { --[[ bold = true ]] },
-        keywords = { --[[ underline = true ]] },
-        functions = { --[[ bold = true, undercurl = true ]] },
+        comments = { --[[ italic = true ]]
+        },
+        strings = { --[[ bold = true ]]
+        },
+        keywords = { --[[ underline = true ]]
+        },
+        functions = { --[[ bold = true, undercurl = true ]]
+        },
         variables = {},
         operators = {},
         types = {},
@@ -56,7 +60,7 @@ return {
         -- "lspsaga",
         -- "mini",
         -- "neogit",
-        "nvim-cmp",
+        -- "nvim-cmp",
         -- "nvim-navic",
         "nvim-tree",
         "nvim-web-devicons",
@@ -71,12 +75,12 @@ return {
         borders = false, -- Disable borders between verticaly split windows
         background = false, -- Prevent the theme from setting the background (NeoVim then uses your terminal background)
         term_colors = false, -- Prevent the theme from setting terminal colors
-        eob_lines = false -- Hide the end-of-buffer lines
+        eob_lines = false, -- Hide the end-of-buffer lines
       },
 
       high_visibility = {
         lighter = false, -- Enable higher contrast text for lighter style
-        darker = false -- Enable higher contrast text for darker style
+        darker = false, -- Enable higher contrast text for darker style
       },
 
       lualine_style = "default", -- Lualine style ( can be 'stealth' or 'default' )
@@ -88,10 +92,10 @@ return {
       custom_highlights = {}, -- Overwrite highlights with your own
     },
     config = function(_, opts)
-      require('material').setup(opts)
+      require("material").setup(opts)
 
       vim.g.material_style = "deep ocean"
-      vim.cmd.colorscheme "material"
+      vim.cmd.colorscheme("material")
     end,
   },
 
@@ -156,7 +160,7 @@ return {
           },
         },
       },
-    }
+    },
   },
 
   {
@@ -165,21 +169,24 @@ return {
     lazy = true,
     priority = 1000, -- make sure to load this before all the other start plugins
     opts = {
-      dark_variant = 'main', -- 'main' | 'moon'
+      dark_variant = "main", -- 'main' | 'moon'
       dim_nc_background = true,
     },
     config = function(_, opts)
-      local scheme = require "rose-pine"
+      local scheme = require("rose-pine")
       scheme.setup(opts)
 
-      vim.cmd [[ highlight Identifier guifg=#eb6f92 ]]
-    end
+      vim.cmd([[ highlight Identifier guifg=#eb6f92 ]])
+    end,
   },
 
   {
-    'folke/tokyonight.nvim',
+    "folke/tokyonight.nvim",
     lazy = false, -- make sure we load this during startup if it is your main colorscheme
     priority = 1000, -- make sure to load this before all the other start plugins
+    ---@class tokyonight.Config
+    ---@field on_colors fun(colors: ColorScheme)
+    ---@field on_highlights fun(highlights: tokyonight.Highlights, colors: ColorScheme)
     opts = {
       dim_inactive = false,
       style = "night",
@@ -188,27 +195,43 @@ return {
         floats = "tranparent",
       },
       transparent = false,
-      on_highlights = function(hl, colors)
-        hl.LineNr = {
+
+      ---@param highlights tokyonight.Highlights
+      ---@param colors ColorScheme
+      on_highlights = function(highlights, colors)
+        highlights.LineNr = {
           fg = colors.yellow,
         }
-        hl.CursorLineNr = {
+        highlights.CursorLineNr = {
           fg = colors.yellow,
           bg = "#0a0a0a",
         }
-        hl.CursorLine = {
+        highlights.CursorLine = {
           bg = "#0a0a0a",
         }
-        hl.WinSeparator = {
+        highlights.WinSeparator = {
           fg = colors.yellow,
           bg = colors.black,
         }
       end,
+      ---@type table<string, boolean|{enabled:boolean}>
+      plugins = {
+        -- enable all plugins when not using lazy.nvim
+        -- set to false to manually enable/disable plugins
+        all = package.loaded.lazy == nil,
+        -- uses your plugin manager to automatically enable needed plugins
+        -- currently only lazy.nvim is supported
+        auto = true,
+        -- add any plugins here that you want to enable
+        -- for all possible plugins, see:
+        --   * https://github.com/folke/tokyonight.nvim/tree/main/lua/tokyonight/groups
+        -- telescope = true,
+      },
     },
     config = function(_, opts)
-      require('tokyonight').setup(opts)
+      require("tokyonight").setup(opts)
 
-      vim.cmd.colorscheme "tokyonight-night"
+      vim.cmd.colorscheme("tokyonight-night")
     end,
   },
 }
