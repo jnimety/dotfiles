@@ -3,10 +3,10 @@
 .gitconfig.d/user
 .gitconfig.d/local
 .config/tmux/plugins
-.config/tmux/tmux-tokyo-night
 .config/tmux/tmux-sensible/
+.config/tmux/tmux-tokyo-night
+.config/tmux/tpm/
 .config/tmux/vim-tmux-navigator/
-!.config/tmux/tpm
 .config/tmux/user.conf
 .config/opencpn
 .config/github-copilot/hosts.json
