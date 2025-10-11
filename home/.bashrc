@@ -16,7 +16,10 @@ done
 
 export PATH="$HOME/.bin:$PATH"
 
-source "$HOME/.vi-everywhere/bash.d/init.sh"
+# It might make more sense to have `vi -e` for `EDITOR`
+export EDITOR="vi"
+export PAGER="less"
+export VISUAL="vi"
 
 PATH=$PATH:/usr/local/rvm/bin # Add RVM to PATH for scripting
 
