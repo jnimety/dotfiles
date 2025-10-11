@@ -10,7 +10,7 @@ The dotfiles we use when pairing.
 ## Setup
 
 ```
-git clone git@github.com:jnimety/dotfiles.git ~/.dotfiles
+git clone https://github.com/jnimety/dotfiles.git ~/.dotfiles
 cd ~/.dotfiles
 git submodule init
 git submodule update
