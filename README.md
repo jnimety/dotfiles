@@ -39,4 +39,9 @@ CTRL-a I
 
 ## Updates
 
-`cd ~/.dotfiles && git pull && git submodule update && stow .`
+```
+cd ~/.dotfiles
+git pull
+git submodule update
+stow .
+```
