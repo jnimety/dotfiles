@@ -30,12 +30,11 @@ Update `~/.gitconfig.d/user`
   email = [YOUR EMAIL HERE]
 ```
 
-Install tmux plugins
-see https://github.com/tmux-plugins/tpm?tab=readme-ov-file#key-bindings
+Install tmux plugins, see https://github.com/tmux-plugins/tpm?tab=readme-ov-file#key-bindings
 
 ```
 tmux
-CTRL-a I
+CTRL-a I # The initial install takes a few seconds, be patient
 ```
 
 ## Updates
