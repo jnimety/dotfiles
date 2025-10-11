@@ -1,7 +1,5 @@
 # dotfiles
 
-The dotfiles we use when pairing.
-
 ## Prerequisites
 
 - git
