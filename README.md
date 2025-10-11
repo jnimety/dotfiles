@@ -16,6 +16,16 @@ git submodule init
 git submodule update
 ```
 
+These dotfiles assume you have the following installed:
+
+- nodenv (fish)
+- rbenv (fish)
+- rust/cargo (nvim)
+- starship (fish)
+- tree-sitter-cli (nvim)
+- npm (nvim)
+- ripgrep (nvim)
+
 ## Installation
 
 `cd ~/.dotfiles && stow .`
