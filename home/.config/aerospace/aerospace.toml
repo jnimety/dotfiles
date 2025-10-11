@@ -60,6 +60,10 @@ automatically-unhide-macos-hidden-apps = false
     outer.top =        10
     outer.right =      10
 
+[[on-window-detected]]
+if.app-id = "com.utmapp.UTM"
+    run = "layout floating"
+
 # 'main' binding mode declaration
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
 # 'main' binding mode must be always presented
