@@ -31,6 +31,7 @@ Update `~/.gitconfig.d/user`
 ```
 
 Install tmux plugins
+see https://github.com/tmux-plugins/tpm?tab=readme-ov-file#key-bindings
 
 ```
 tmux
