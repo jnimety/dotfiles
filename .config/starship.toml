@@ -11,7 +11,7 @@ $git_status\
 $nodejs\
 $rust\
 $ruby\
-[](fg:dark_gray bg:background)\
+[](fg:dark_gray bg:none)\
 \n$character"""
 
 palette = 'tokyonight_night'
