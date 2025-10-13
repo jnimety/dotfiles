@@ -102,22 +102,12 @@ return {
   },
 
   {
-    "j-hui/fidget.nvim",
-    tag = "v1.0.0",
-    opts = {},
-  },
-
-  {
     "neovim/nvim-lspconfig",
     cmd = "LspInfo",
     event = { "BufReadPre", "BufNewFile" },
     dependencies = {
       -- Automatically install LSPs to stdpath for neovim
       "mason-org/mason.nvim",
-
-      -- Useful status updates for LSP
-      "j-hui/fidget.nvim",
-
       "saghen/blink.cmp",
     },
     config = function()
