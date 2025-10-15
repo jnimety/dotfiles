@@ -7,8 +7,4 @@
 .config/nvim/lazy-lock.json
 .config/opencpn
 .config/tmux/plugins
-.config/tmux/tmux-sensible/
-.config/tmux/tmux-tokyo-night
-.config/tmux/tpm/
 .config/tmux/user.conf
-.config/tmux/vim-tmux-navigator/
