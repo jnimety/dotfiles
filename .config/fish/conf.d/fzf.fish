@@ -1,28 +1,41 @@
-# fzf.fish is only meant to be used in interactive mode. If not in interactive mode and not in CI, skip the config to speed up shell startup
-if not status is-interactive && test "$CI" != true
-    exit
-end
+# Set up fzf key bindings
 
-# Because of scoping rules, to capture the shell variables exactly as they are, we must read
-# them before even executing _fzf_search_variables. We use psub to store the
-# variables' info in temporary files and pass in the filenames as arguments.
-# This variable is global so that it can be referenced by fzf_configure_bindings and in tests
-set --global _fzf_search_vars_command '_fzf_search_variables (set --show | psub) (set --names | psub)'
+set FZF_DEFAULT_OPTS '
+  --cycle --layout=reverse --border --height=90%
+  --preview-window=wrap --marker="*"'
 
+set FZF_COMPLETION_OPTS ''
+set FZF_DEFAULT_COMMAND 'fd --type f --strip-cwd-prefix'
 
-# Install the default bindings, which are mnemonic and minimally conflict with fish's preset bindings
-fzf_configure_bindings
+# Preview file content using bat (https://github.com/sharkdp/bat)
+set FZF_CTRL_T_OPTS "
+  --walker-skip .git,node_modules,target,sorbet
+  --preview 'bat -n --color=always {}'
+  --bind 'ctrl-/:change-preview-window(down|hidden|)'"
 
-# Doesn't erase autoloaded _fzf_* functions because they are not easily accessible once key bindings are erased
-function _fzf_uninstall --on-event fzf_uninstall
-    _fzf_uninstall_bindings
+# https://github.com/folke/tokyonight.nvim/blob/main/extras/fzf/tokyonight_night.sh
+set FZF_COMPLETION_OPTS "$FZF_COMPLETION_OPTS \
+  --highlight-line \
+  --info=inline-right \
+  --ansi \
+  --layout=reverse \
+  --border=thinblock \
+  --color=bg+:#283457 \
+  --color=bg:#16161e \
+  --color=border:#16161e \
+  --color=fg:#c0caf5 \
+  --color=gutter:#16161e \
+  --color=header:#ff9e64 \
+  --color=hl+:#2ac3de \
+  --color=hl:#2ac3de \
+  --color=info:#545c7e \
+  --color=marker:#ff007c \
+  --color=pointer:#ff007c \
+  --color=prompt:#2ac3de \
+  --color=query:#c0caf5:regular \
+  --color=scrollbar:#27a1b9 \
+  --color=separator:#ff9e64 \
+  --color=spinner:#ff007c \
+"
 
-    set --erase _fzf_search_vars_command
-    functions --erase _fzf_uninstall _fzf_migration_message _fzf_uninstall_bindings fzf_configure_bindings
-    complete --erase fzf_configure_bindings
-
-    set_color cyan
-    echo "fzf.fish uninstalled."
-    echo "You may need to manually remove fzf_configure_bindings from your config.fish if you were using custom key bindings."
-    set_color normal
-end
+fzf --fish | source

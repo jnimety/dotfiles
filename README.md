@@ -45,10 +45,6 @@ tmux
 CTRL-a I # The initial install takes a few seconds, be patient
 ```
 
-Update fish plugins
-
-`fisher update`
-
 ## Updates
 
 ```
