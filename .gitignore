@@ -7,4 +7,5 @@
 .config/nvim/lazy-lock.json
 .config/opencpn
 .config/tmux/plugins
+!.config/tmux/plugins/tpm
 .config/tmux/user.conf
