@@ -1,1 +1,1 @@
-set -Ux DOCKER_BUILDKIT 1
+set -gx DOCKER_BUILDKIT 1
