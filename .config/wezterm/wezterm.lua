@@ -23,7 +23,7 @@ return {
   font_size = 16.0,
   harfbuzz_features = { "calt=0" },
   hide_tab_bar_if_only_one_tab = true,
-  window_background_opacity = 0.87,
+  window_background_opacity = 0.83,
   selection_word_boundary = " \t\n{}[]()\"'`,;:", -- default: " \t\n{}[]()\"'`"
   window_decorations = "RESIZE",
   window_frame = {

@@ -191,10 +191,14 @@ return {
       dim_inactive = false,
       style = "night",
       styles = {
-        -- sidebars = "transparent",
+        sidebars = "transparent",
         floats = "tranparent",
       },
-      transparent = false,
+      transparent = true,
+
+      on_colors = function(colors)
+        colors.fg_gutter = colors.fg_dark
+      end,
 
       ---@param highlights tokyonight.Highlights
       ---@param colors ColorScheme
@@ -204,16 +208,25 @@ return {
         }
         highlights.CursorLineNr = {
           fg = colors.yellow,
-          bg = "#0a0a0a",
+          bg = colors.bg,
         }
         highlights.CursorLine = {
-          bg = "#0a0a0a",
+          bg = colors.bg,
         }
         highlights.WinSeparator = {
           fg = colors.yellow,
-          bg = colors.black,
+          -- bg = colors.black,
+        }
+        highlights.LspReferenceWrite = {
+          bg = colors.bg_highlight,
+        }
+        highlights.LspReferenceRead = {
+          bg = colors.bg_highlight,
         }
       end,
+
+      cache = true,
+
       ---@type table<string, boolean|{enabled:boolean}>
       plugins = {
         -- enable all plugins when not using lazy.nvim

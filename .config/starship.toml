@@ -17,7 +17,6 @@ $ruby\
 palette = 'tokyonight_night'
 
 [palettes.tokyonight_night]
-background = '#1a1b26'
 blue = '#7aa2f7'
 dark_gray = '#212736'
 gray = '#3b4261'
@@ -31,7 +30,6 @@ error_symbol = "[❯](blue)"
 vimcmd_symbol = "[❮](blue)"
 
 [username]
-style_user = "bg:blue fg:background"
 style_root = "bold fg:ruby_red bg:blue"
 format = '[ $user ]($style)'
 
