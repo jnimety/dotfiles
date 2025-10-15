@@ -1,13 +1,24 @@
-export EDITOR=vim
-export ZSH=$HOME/.oh-my-zsh
-export ZSH_CUSTOM=$HOME/.oh-my-zsh-custom
-export ZSH_THEME="jnimety"
-VI_MODE_SET_CURSOR=true
-plugins=(zsh-autosuggestions zsh-syntax-highlighting bundler rails ruby macos vi-mode rvm terraform)
+export PATH="/opt/homebrew/bin:$PATH"
+export PATH="/opt/homebrew/sbin:$PATH"
+export PATH="$PATH:$HOME/.bin"
+export PATH="$PATH:$HOME/.local/bin"
+export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
 
-source $ZSH/oh-my-zsh.sh
-
+export PAGER="less -sR"
+export VISUAL=nvim
+export EDITOR=$VISUAL
+export GIT_EDITOR=$VISUAL
+export LANG=en_US.UTF-8
+export LOCALE=UTF-8
 export LC_ALL=en_US.UTF-8
+export LC_COLLATE=en_US.UTF-8
+# set -Ux MANPAGER "sh -c 'col -bx | bat --language man --plain'"
+export MANPAGER="nvim +Man!"
+export MANCOLOR=1
+
+export LESSCHARSET='utf-8'
+
+VI_MODE_SET_CURSOR=true
 
 #disable ctrl-s/suspension
 stty stop undef
@@ -17,128 +28,9 @@ setopt interactivecomments
 bindkey '^R' history-incremental-search-backward
 autoload -U zrecompile
 
-fliptable() { echo "（╯°□°）╯ ┻━┻"; } # Flip a table. Example usage: fsck -y /dev/sdb1 || fliptable
-alias tableflip='fliptable'
-alias :fliptable:='fliptable'
-trollface() {
-	echo "
-	░░░░░▄▄▄▄▀▀▀▀▀▀▀▀▄▄▄▄▄▄░░░░░░░
-	░░░░░█░░░░▒▒▒▒▒▒▒▒▒▒▒▒░░▀▀▄░░░░
-	░░░░█░░░▒▒▒▒▒▒░░░░░░░░▒▒▒░░█░░░
-	░░░█░░░░░░▄██▀▄▄░░░░░▄▄▄░░░░█░░
-	░▄▀▒▄▄▄▒░█▀▀▀▀▄▄█░░░██▄▄█░░░░█░
-	█░▒█▒▄░▀▄▄▄▀░░░░░░░░█░░░▒▒▒▒▒░█
-	█░▒█░█▀▄▄░░░░░█▀░░░░▀▄░░▄▀▀▀▄▒█
-	░█░▀▄░█▄░█▀▄▄░▀░▀▀░▄▄▀░░░░█░░█░
-	░░█░░░▀▄▀█▄▄░█▀▀▀▄▄▄▄▀▀█▀██░█░░
-	░░░█░░░░██░░▀█▄▄▄█▄▄█▄████░█░░░
-	░░░░█░░░░▀▀▄░█░░░█░█▀██████░█░░
-	░░░░░▀▄░░░░░▀▀▄▄▄█▄█▄█▄█▄▀░░█░░
-	░░░░░░░▀▄▄░▒▒▒▒░░░░░░░░░░▒░░░█░
-	░░░░░░░░░░▀▀▄▄░▒▒▒▒▒▒▒▒▒▒░░░░█░
-	░░░░░░░░░░░░░░▀▄▄▄▄▄░░░░░░░░█░░
-	"
-}
-alias :troll:='trollface'
-
-dayum() {
-  echo "
-
-                     ---------------
-               -----------------------------
-          ---------o-------o----o------o--------
-       ----------o-----o------o----o------o--------
-     -+----o---o----------o--------o----------------
-    -++-----------o----------o------------o----------
-    +++-----------------o----------o-----------------
-   -+++++++++++++++++++++?-----------7Z88888888888888888
- SSSSOOOOOOSSSSSSSSSSOOOOSSSSSSZ888888888O8888OOOOOOOOOOOO
-SSSSSSSSSSSSSSSS888888888OO88OOZO8OOOOOOOOOOOOOOOOOOOO8
-SSSSSSSS..?OOO8888OOOOOOOO??OOO..OOOOODDOOODDOOODDDDOO88
-SSSDDDDDDD..??OOOOOZZOOZ???+..DD888888888888888888888888
-  8DDDDDDDDD..???????????..88888888888888888888888888888
-  88DDDDDD888..???????..888888888888888888888888O7----
-   -Z8888888888..???..888888Z--------------------------
-   -------------...+-----------------------------------
-   -+--------------------------------------------------
-   -+++------------------------------------------------
-   -++++++++++?---------------------------------------
-  "
-}
-
-doge() {
-  echo "
-  ─────────▄──────────────▄
-  ────────▌▒█───────────▄▀▒▌
-  ────────▌▒▒▀▄───────▄▀▒▒▒▐
-  ───────▐▄▀▒▒▀▀▀▀▄▄▄▀▒▒▒▒▒▐
-  ─────▄▄▀▒▒▒▒▒▒▒▒▒▒▒█▒▒▄█▒▐
-  ───▄▀▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▀██▀▒▌
-  ──▐▒▒▒▄▄▄▒▒▒▒▒▒▒▒▒▒▒▒▒▀▄▒▒▌
-  ──▌▒▒▐▄█▀▒▒▒▒▄▀█▄▒▒▒▒▒▒▒█▒▐
-  ─▐▒▒▒▒▒▒▒▒▒▒▒▌██▀▒▒▒▒▒▒▒▒▀▄▌
-  ─▌▒▀▄██▄▒▒▒▒▒▒▒▒▒▒▒░░░░▒▒▒▒▌
-  ─▌▀▐▄█▄█▌▄▒▀▒▒▒▒▒▒░░░░░░▒▒▒▐
-  ▐▒▀▐▀▐▀▒▒▄▄▒▄▒▒▒▒▒░░░░░░▒▒▒▒▌
-  ▐▒▒▒▀▀▄▄▒▒▒▄▒▒▒▒▒▒░░░░░░▒▒▒▐
-  ─▌▒▒▒▒▒▒▀▀▀▒▒▒▒▒▒▒▒░░░░▒▒▒▒▌
-  ─▐▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▐
-  ──▀▄▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▄▒▒▒▒▌
-  ────▀▄▒▒▒▒▒▒▒▒▒▒▄▄▄▀▒▒▒▒▄▀
-  ───▐▀▒▀▄▄▄▄▄▄▀▀▀▒▒▒▒▒▄▄▀
-  ──▐▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▀▀
-  "
-}
-#ignore obnoxious stuff
-alias git='nocorrect noglob git'
-alias rake='noglob rake'
-# Add the following to your ~/.bashrc or ~/.zshrc
-#
-# Alternatively, copy/symlink this file and source in your shell.  See `hitch --setup-path`.
-
-hitch() {
-  (rvm system; command hitch "$@")
-  if [[ -s "$HOME/.hitch_export_authors" ]] ; then source "$HOME/.hitch_export_authors" ; fi
-}
-alias unhitch='hitch -u'
-alias vi='vim'
-alias openwork='vim -p $(git ls-files -m) $(git ls-files --others --exclude-standard)'
-
-PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
-PATH=$PATH:$HOME/bin # Make personal scripts available
-PATH=$PATH:$HOME/.bin # Make dotfiles scripts available
-
-# tell nokogiri to use sysem libraries instead of compiling packaged libs
-export NOKOGIRI_USE_SYSTEM_LIBRARIES=1
-
-if [ -f "$HOME/.my_pairing_port" ]; then
-  # Put your pairing port in ~/.my_pairing_port (single line with just your port number)
-  my_pairing_port=$(cat $HOME/.my_pairing_port)
-  alias rsp="rails server -u puma -b 127.0.0.1 --port ${my_pairing_port}"
-fi
-
-if [ -f "$HOME/.my_live_reload_port" ]; then
-  # Put your live reload port in ~/.my_live_reload_port (single line with just your port number)
-  export LIVE_RELOAD_PORT=$(cat $HOME/.my_live_reload_port)
-fi
-
-if [ -f "$HOME/.my_jasmine_server_port" ]; then
-  # Put your jasmine port in ~/.my_jasmine_server_port (single line with just your port number)
-  export JASMINE_SERVER_PORT=$(cat $HOME/.my_jasmine_server_port)
-fi
-
 # Allow for local environment configuration in ~/.zsh/*.zsh
-if [ -d ~/.zsh ]; then
-  for config_file (~/.zsh/*.zsh); do
+if [ -d $HOME/.config/zsh ]; then
+  for config_file ($HOME/.config/zsh/*.zsh); do
     source $config_file
   done
 fi
-
-# Prevent warnings if the user has not set up a tmux user.conf file
-if [ ! -f "$HOME/.tmux/user.conf" ]; then
-  touch $HOME/.tmux/user.conf
-fi
-
-# RVM is a silly thing. This fixes tmux not loading gemset
-# http://stackoverflow.com/a/6097090/3010499
-cd .
