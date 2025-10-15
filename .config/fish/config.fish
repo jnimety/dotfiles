@@ -29,6 +29,8 @@ set -Ux LESSCHARSET 'utf-8'
 # set -Ux LESS_TERMCAP_ue (set_color normal) # reset underline
 # set -Ux LESS_TERMCAP_us (set_color e0af68) # begin underline
 
+set -Ux XDG_CONFIG_HOME $HOME/.config
+
 function bind_bang
     switch (commandline -t)[-1]
         case "!"
