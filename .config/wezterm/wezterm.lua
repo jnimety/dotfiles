@@ -9,7 +9,7 @@ local mux = wezterm.mux
 
 return {
   audible_bell = "Disabled",
-  color_scheme = "tokyonight-night",
+  color_scheme = "tokyonight_night",
   font = wezterm.font_with_fallback({
     { family = "Iosevka Term", stretch = "Expanded" },
     "Symbols Nerd Font Mono",
