@@ -2,7 +2,6 @@
 *.sw[nop]
 .gitconfig.d/user
 .gitconfig.d/local
-.config/fish/fish_variables
 .config/gh/hosts.yml
 .config/github-copilot
 .config/nvim/lazy-lock.json
