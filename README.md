@@ -45,6 +45,13 @@ tmux
 CTRL-a I # The initial install takes a few seconds, be patient
 ```
 
+Install your fish theme
+
+```
+fish_config theme choose tokyonight_night
+fish_config theme save
+```
+
 ## Updates
 
 ```
