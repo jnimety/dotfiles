@@ -404,6 +404,8 @@ return {
         "herb-language-server",
         "openscad-lsp",
         "prettierd",
+        "shfmt",
+        "shellcheck",
         "stylua",
         "sql-formatter",
         "tree-sitter-cli",
