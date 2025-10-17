@@ -19,6 +19,15 @@ return {
       intensity = "Bold",
       font = wezterm.font("Iosevka Term", { weight = "Medium", stretch = "Expanded" }),
     },
+    {
+      italic = true,
+      font = wezterm.font("Iosevka Term", { stretch = "Expanded", style = "Oblique" }),
+    },
+    {
+      intensity = "Bold",
+      italic = true,
+      font = wezterm.font("Iosevka Term", { weight = "Medium", stretch = "Expanded", style = "Oblique" }),
+    },
   },
   font_size = 16.0,
   harfbuzz_features = { "calt=0" },
