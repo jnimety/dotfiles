@@ -203,26 +203,13 @@ return {
       ---@param highlights tokyonight.Highlights
       ---@param colors ColorScheme
       on_highlights = function(highlights, colors)
-        highlights.LineNr = {
-          fg = colors.yellow,
-        }
-        highlights.CursorLineNr = {
-          fg = colors.yellow,
-          bg = colors.bg,
-        }
-        highlights.CursorLine = {
-          bg = colors.bg,
-        }
-        highlights.WinSeparator = {
-          fg = colors.yellow,
-          -- bg = colors.black,
-        }
-        highlights.LspReferenceWrite = {
-          bg = colors.bg_highlight,
-        }
-        highlights.LspReferenceRead = {
-          bg = colors.bg_highlight,
-        }
+        highlights.CursorLine = { bg = colors.bg }
+        highlights.CursorLineNr = { fg = colors.yellow, bg = colors.bg }
+        highlights.LineNr = { fg = colors.yellow }
+        highlights.LspReferenceRead = { bg = colors.bg_highlight }
+        highlights.LspReferenceText = { bg = colors.bg_highlight }
+        highlights.LspReferenceWrite = { bg = colors.bg_highlight }
+        highlights.WinSeparator = { fg = colors.yellow }
       end,
 
       cache = true,
