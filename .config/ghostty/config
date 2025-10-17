@@ -1,0 +1,21 @@
+background-opacity = 0.9
+theme = TokyoNight Night
+# custom-shader = ~/.config/ghostty/shaders/matrix-hallway.glsl
+# custom-shader = ~/.config/ghostty/shaders/inside-the-matrix.glsl
+
+font-family = Iosevka Term
+font-family-bold = Iosevka Term
+font-family-italic = Iosevka Term
+font-family-bold-italic = Iosevka Term
+
+font-style = Extended
+font-style-bold = Medium Extended
+font-style-italic = Extended Oblique
+font-style-bold-italic = Medium Extended Oblique
+
+font-synthetic-style = no-bold,no-italic,no-bold-italic
+
+font-size = 16
+font-feature = calt=0
+
+quit-after-last-window-closed
