@@ -23,6 +23,8 @@ These dotfiles assume you have the following installed:
 - tree-sitter-cli (nvim)
 - npm (nvim)
 - ripgrep (nvim)
+- fzf (fish, nvim)
+- jq (hyprland bind)
 
 ## Installation
 
@@ -59,4 +61,20 @@ cd ~/.dotfiles
 git pull
 git submodule update
 stow .
+```
+
+## Useful Commands
+
+Ghostty Terminfo - If xterm-ghostty isn't available yet in your version of ncurses:
+
+```
+# Install system-wide (/etc/terminfo or /usr/share/terminfo)
+infocmp -x xterm-ghostty | sudo tic -x -
+
+# Install to ~/.terminfo on remote
+infocmp -x xterm-ghostty | ssh YOUR-SERVER -- tic -x -
+
+# Install system-wide on remote (/etc/terminfo or /usr/share/terminfo)
+# If sudo requires a password I don't think this will work
+infocmp -x xterm-ghostty | ssh YOUR-SERVER -- sudo tic -x -
 ```
