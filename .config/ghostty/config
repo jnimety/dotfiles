@@ -1,4 +1,4 @@
-background-opacity = 0.9
+background-opacity = 0.87
 theme = TokyoNight Night
 # custom-shader = ~/.config/ghostty/shaders/matrix-hallway.glsl
 # custom-shader = ~/.config/ghostty/shaders/inside-the-matrix.glsl
@@ -18,4 +18,4 @@ font-synthetic-style = no-bold,no-italic,no-bold-italic
 font-size = 16
 font-feature = calt=0
 
-quit-after-last-window-closed
+quit-after-last-window-closed = true
