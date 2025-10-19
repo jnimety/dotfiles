@@ -1,7 +1,7 @@
 "$schema" = 'https://starship.rs/config-schema.json'
 
 format = """
-[░▒▓](blue)\
+$hostname\
 $username\
 [](bg:gray fg:blue)\
 $directory\
@@ -28,6 +28,13 @@ rust_orange = '#d34516'
 success_symbol = "[❯](blue)"
 error_symbol = "[❯](blue)"
 vimcmd_symbol = "[❮](blue)"
+
+# ~/.config/starship.toml
+
+[hostname]
+ssh_only = false
+format = '[ $hostname ](bg:blue fg:dark_gray)'
+disabled = false
 
 [username]
 style_root = "bold fg:ruby_red bg:blue"
