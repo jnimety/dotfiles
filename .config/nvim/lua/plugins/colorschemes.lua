@@ -25,9 +25,7 @@ return {
         highlights.LineNrBelow.fg = colors.fg_dark
       end,
     },
-    config = function(_, opts)
-      require("tokyonight").setup(opts)
-
+    init = function()
       vim.cmd.colorscheme("tokyonight-night")
     end,
   },
