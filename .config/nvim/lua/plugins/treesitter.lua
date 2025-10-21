@@ -47,6 +47,7 @@ return { -- Highlight, edit, and navigate code
       "typescript",
       "vim",
       "vimdoc",
+      "xml",
       "yaml",
     },
   },
