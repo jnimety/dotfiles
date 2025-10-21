@@ -11,6 +11,7 @@ $git_status\
 $nodejs\
 $rust\
 $ruby\
+$terraform\
 [](fg:dark_gray bg:none)\
 \n$character"""
 
@@ -23,6 +24,7 @@ gray = '#3b4261'
 nodejs_green = '#68a063'
 ruby_red = '#cc342d'
 rust_orange = '#d34516'
+terraform_purple = '#7c42bc'
 
 [character]
 success_symbol = "[❯](blue)"
@@ -76,3 +78,8 @@ format = '[[ $symbol ($version) ](fg:rust_orange bg:dark_gray)]($style)'
 symbol = ""
 style = "bg:dark_gray"
 format = '[[ $symbol ($version) ](fg:ruby_red bg:dark_gray)]($style)'
+
+[terraform]
+symbol = ""
+style = "bg:dark_gray"
+format = '[[ $symbol ($workspace) ](fg:terraform_purple bg:dark_gray)]($style)'
