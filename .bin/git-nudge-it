@@ -1,1 +1,0 @@
-git nudge origin $(git current-branch)

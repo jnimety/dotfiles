@@ -1,2 +1,0 @@
-#NOTE: wip stands for Work In Progress
-git reset --soft HEAD~ && git reset

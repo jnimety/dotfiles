@@ -1,4 +1,0 @@
-#!/usr/bin/env ruby
-require_relative '../.bin-services/hotfix-cli'
-
-HotfixCLI.start(ARGV)
