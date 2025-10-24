@@ -39,6 +39,7 @@ return { -- Highlight, edit, and navigate code
       "regex",
       "ruby",
       "rust",
+      "ssh_config",
       "sql",
       "tera",
       "terraform",
