@@ -60,7 +60,7 @@ fish_config theme save
 cd ~/.dotfiles
 git pull
 git submodule update
-stow .
+stow --verbose .
 ```
 
 ## Useful Commands
