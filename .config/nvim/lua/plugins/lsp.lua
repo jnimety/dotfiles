@@ -154,7 +154,7 @@ return {
 
       local servers_with_defaults = {
         "bashls",
-        -- "cssls",
+        "cssls",
         "dockerls",
         "herb_ls",
         -- "ocamllsp",

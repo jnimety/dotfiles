@@ -15,6 +15,13 @@ vim.api.nvim_create_autocmd("LspProgress", {
 
 return {
   {
+    "brenoprata10/nvim-highlight-colors",
+    opts = {
+      render = "virtual",
+      virtual_symbol = "󱓻",
+    },
+  },
+  {
     "folke/snacks.nvim",
     priority = 1000,
     lazy = false,
