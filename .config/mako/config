@@ -1,0 +1,33 @@
+anchor=top-right
+default-timeout=5000
+width=420
+height=110
+
+text-color=#a9b1d6
+border-color=#7aa2f7
+background-color=#16161e
+padding=10
+border-size=2
+border-radius=5
+layer=overlay
+font=monospace 12
+
+[mode=do-not-disturb]
+invisible=true
+
+[mode=do-not-disturb app-name=notify-send]
+invisible=false
+
+[urgency=low]
+border-color=#0db9d7
+
+[urgency=normal]
+border-color=#0db9d7
+
+[urgency=high]
+border-color=#e0af68
+default-timeout=0
+
+[urgency=critical]
+border-color=#e0af68
+default-timeout=0

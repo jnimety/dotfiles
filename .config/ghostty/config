@@ -15,7 +15,7 @@ font-style-bold-italic = Medium Extended Oblique
 
 font-synthetic-style = no-bold,no-italic,no-bold-italic
 
-font-size = 16
+font-size = 12
 font-feature = calt=0
 
 quit-after-last-window-closed = true
