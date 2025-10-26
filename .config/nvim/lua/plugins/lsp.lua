@@ -414,6 +414,8 @@ return {
       },
       ui = {
         check_outdated_packages_on_open = false,
+        -- border = false,
+        -- backdrop = 100,
       },
     },
     config = function(_, opts)
