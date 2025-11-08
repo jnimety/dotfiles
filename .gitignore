@@ -11,3 +11,4 @@
 .config/tmux/plugins
 !.config/tmux/plugins/tpm
 .config/tmux/user.conf
+.config/tmux/terminfo.src
