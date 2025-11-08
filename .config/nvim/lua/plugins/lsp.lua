@@ -396,6 +396,7 @@ return {
     cmd = "Mason",
     opts = {
       ensure_installed = {
+        "ansible-lint",
         "codespell",
         -- "eslint-lsp",
         -- "json-lsp",
@@ -431,6 +432,7 @@ return {
         automatic_enable = true,
         automatic_installation = false,
         ensure_installed = {
+          "ansiblels",
           "bashls",
           "dockerls",
           -- "eslint",
