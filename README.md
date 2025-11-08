@@ -16,16 +16,16 @@ git submodule update
 
 These dotfiles assume you have the following installed:
 
+- eza (fish)
+- fzf (fish, nvim)
+- jq (hyprland bind)
 - nodenv (fish)
+- npm (nvim)
 - rbenv (fish)
+- ripgrep (nvim)
 - rust/cargo (nvim)
 - starship (fish)
 - tree-sitter-cli (nvim)
-- npm (nvim)
-- ripgrep (nvim)
-- fzf (fish, nvim)
-- jq (hyprland bind)
-- eza (fish)
 - zoxide (fish)
 
 ## Installation
