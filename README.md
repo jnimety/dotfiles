@@ -25,6 +25,8 @@ These dotfiles assume you have the following installed:
 - ripgrep (nvim)
 - fzf (fish, nvim)
 - jq (hyprland bind)
+- eza (fish)
+- zoxide (fish)
 
 ## Installation
 
