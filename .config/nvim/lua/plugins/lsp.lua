@@ -64,11 +64,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
           end,
         })
       end
-
-      -- if client.server_capabilities.inlayHintProvider then
-      --   -- vim.notify("enabling inlay_hint")
-      --   vim.lsp.inlay_hint.enable(buffer, true)
-      -- end
     end
   end,
 })
@@ -152,241 +147,8 @@ return {
       local capabilities = vim.lsp.protocol.make_client_capabilities()
       capabilities = vim.tbl_deep_extend("force", capabilities, require("blink.cmp").get_lsp_capabilities({}, false))
 
-      local servers_with_defaults = {
-        "bashls",
-        "cssls",
-        "dockerls",
-        "herb_ls",
-        -- "ocamllsp",
-        "openscad_lsp",
-        "tailwindcss",
-        "terraformls",
-        "yamlls",
-      }
-
-      for _, server in pairs(servers_with_defaults) do
-        vim.lsp.config(server, {
-          capabilities = capabilities,
-        })
-      end
-
-      vim.lsp.config("helm_ls", {
-        settings = {
-          ["helm-ls"] = {
-            yamlls = {
-              path = "/Users/jnimety/.local/share/nvim/mason/bin/yaml-language-server",
-            },
-          },
-        },
-      })
-
-      vim.lsp.config("biome", {
+      vim.lsp.config("*", {
         capabilities = capabilities,
-        cmd = { "pnpm", "biome", "lsp-proxy" },
-      })
-
-      -- vim.lsp.config("eslint", {
-      --   capabilities = capabilities,
-      --   cmd = { "pnpm", "pnp-vscode-eslint-language-server", "--stdio" },
-      -- })
-
-      -- vim.lsp.config("jsonls", {
-      --   capabilities = capabilities,
-      --   cmd = { "pnpm", "pnp-vscode-json-language-server", "--stdio" },
-      -- })
-
-      vim.lsp.config("sorbet", {
-        capabilities = capabilities,
-        filetypes = { "ruby" },
-        cmd = { "bundle", "exec", "srb", "typecheck", "--lsp", "--enable-experimental-lsp-signature-help" },
-      })
-
-      -- vim.lsp.config("steep", {
-      --   capabilities = capabilities,
-      --   filetypes = { "ruby", "eruby", "rbs" },
-      --   cmd = { "bundle", "exec", "steep", "langserver" },
-      -- })
-
-      local function add_ruby_deps_command(client, bufnr)
-        vim.api.nvim_buf_create_user_command(bufnr, "ShowRubyDeps", function(opts)
-          local params = vim.lsp.util.make_text_document_params()
-          local showAll = opts.args == "all"
-
-          client.request("rubyLsp/workspace/dependencies", params, function(error, result)
-            if error then
-              print("Error showing deps: " .. error)
-              return
-            end
-
-            local qf_list = {}
-            for _, item in ipairs(result) do
-              if showAll or item.dependency then
-                table.insert(qf_list, {
-                  text = string.format("%s (%s) - %s", item.name, item.version, item.dependency),
-                  filename = item.path,
-                })
-              end
-            end
-
-            vim.fn.setqflist(qf_list)
-            vim.cmd("copen")
-          end, bufnr)
-        end, {
-          nargs = "?",
-          complete = function()
-            return { "all" }
-          end,
-        })
-      end
-
-      vim.lsp.config("rust_analyzer", {
-        settings = {
-          ["rust-analyzer"] = {
-            check = {
-              command = "clippy",
-              -- Optional: Add extra arguments for Clippy, e.g., to treat warnings as errors
-              -- extraArgs = { "-- -D warnings" },
-            },
-            -- Optional: Enable diagnostics on save
-            checkOnSave = true,
-          },
-        },
-      })
-
-      vim.lsp.config("ruby_lsp", {
-        capabilities = capabilities,
-        cmd = { "bundle", "exec", "ruby-lsp" },
-        on_attach = function(client, buffer)
-          add_ruby_deps_command(client, buffer)
-        end,
-        -- init_options = {
-        --   enabledFeatures = {
-        --     "codeActions",
-        --     -- "codeLens",
-        --     -- "completion",
-        --     -- "definition",
-        --     "diagnostics",
-        --     "documentHighlights",
-        --     -- "documentLink",
-        --     "documentSymbols",
-        --     -- "foldingRanges",
-        --     "formatting",
-        --     -- "hover",
-        --     "inlayHint",
-        --     -- "onTypeFormatting",
-        --     -- "references",
-        --     -- "selectionRanges",
-        --     -- "semanticHighlighting"
-        --     -- "workspaceSymbol",
-        --   },
-        -- },
-      })
-
-      -- vim.lsp.config("stylelint_lsp", {
-      --   capabilities = capabilities,
-      --   cmd = { "pnpm", "pnp-stylelint-lsp", "--stdio" },
-      --   filetypes = {
-      --     "css",
-      --     "less",
-      --     "postcss",
-      --     "scss",
-      --   },
-      --   settings = {
-      --     stylelintplus = {
-      --       enable = true,
-      --       autoFixOnFormat = true,
-      --       cssInJs = false,
-      --       validateOnType = true,
-      --     },
-      --   },
-      -- })
-
-      vim.lsp.config("lua_ls", {
-        capabilities = capabilities,
-        on_init = function(client)
-          if client.workspace_folders then
-            local path = client.workspace_folders[1].name
-            if
-              path ~= vim.fn.stdpath("config")
-              and (vim.uv.fs_stat(path .. "/.luarc.json") or vim.uv.fs_stat(path .. "/.luarc.jsonc"))
-            then
-              return
-            end
-          end
-
-          client.config.settings.Lua = vim.tbl_deep_extend("force", client.config.settings.Lua, {
-            runtime = {
-              -- Tell the language server which version of Lua you're using
-              -- (most likely LuaJIT in the case of Neovim)
-              version = "LuaJIT",
-            },
-            -- Make the server aware of Neovim runtime files
-            workspace = {
-              checkThirdParty = false,
-              library = {
-                vim.env.VIMRUNTIME,
-                -- Depending on the usage, you might want to add additional paths here.
-                -- "${3rd}/luv/library"
-                -- "${3rd}/busted/library",
-              },
-              -- or pull in all of 'runtimepath'. NOTE: this is a lot slower and will cause issues when working on your own configuration (see https://github.com/neovim/nvim-lspconfig/issues/3189)
-              -- library = vim.api.nvim_get_runtime_file("", true)
-            },
-          })
-        end,
-        settings = {
-          Lua = {
-            format = {
-              -- format settings go in ~/.editorconfig or a project specific .editorconfig
-              -- options specific to this formatter: https://github.com/CppCXY/EmmyLuaCodeStyle/blob/master/lua.template.editorconfig
-              enable = false,
-              defaultConfig = {
-                indent_style = "space",
-                indent_size = "2",
-              },
-            },
-            diagnostics = {
-              neededFileStatus = {
-                ["codestyle-check"] = "Any",
-              },
-            },
-            -- Do not send telemetry data containing a randomized but unique identifier
-            telemetry = { enable = false },
-          },
-        },
-      })
-
-      vim.lsp.config("ts_ls", {
-        capabilities = capabilities,
-        cmd = { "pnpm", "pnp-typescript-language-server", "--stdio" },
-        init_options = {
-          preferences = {
-            includeInlayEnumMemberValueHints = true,
-            includeInlayFunctionLikeReturnTypeHints = true,
-            includeInlayFunctionParameterTypeHints = true,
-            includeInlayParameterNameHints = "all", -- 'none' | 'literals' | 'all';
-            includeInlayParameterNameHintsWhenArgumentMatchesName = true,
-            includeInlayPropertyDeclarationTypeHints = true,
-            includeInlayVariableTypeHints = true,
-            quotePreference = "double",
-          },
-        },
-        settings = {
-          typescript = {
-            format = {
-              insertSpaceAfterOpeningAndBeforeClosingEmptyBraces = false,
-              insertSpaceAfterFunctionKeywordForAnonymousFunctions = true,
-              semicolons = "ignore",
-            },
-          },
-          javascript = {
-            format = {
-              insertSpaceAfterOpeningAndBeforeClosingEmptyBraces = false,
-              insertSpaceAfterFunctionKeywordForAnonymousFunctions = true,
-              semicolons = "ignore",
-            },
-          },
-        },
       })
     end,
   },
@@ -398,17 +160,15 @@ return {
       ensure_installed = {
         "ansible-lint",
         "codespell",
-        -- "eslint-lsp",
-        -- "json-lsp",
         "hadolint",
         "helm-ls",
         "herb-language-server",
         "openscad-lsp",
         "prettierd",
-        "shfmt",
         "shellcheck",
-        "stylua",
+        "shfmt",
         "sql-formatter",
+        "stylua",
         "tree-sitter-cli",
         "typescript-language-server",
         "yamlfmt",
@@ -434,14 +194,11 @@ return {
         ensure_installed = {
           "ansiblels",
           "bashls",
+          -- "biome", -- add to project package.json instead
           "dockerls",
-          -- "eslint",
-          -- "hadolint",
-          -- "jsonls",
           -- "ruby_lsp", -- add to project Gemfile instead
           "rust_analyzer",
           -- "sorbet", -- add to project Gemfile instead
-          -- "stylelint_lsp",
           "lua_ls",
           "tailwindcss",
           "terraformls",
