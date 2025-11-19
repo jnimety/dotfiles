@@ -70,33 +70,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
 return {
   {
-    "nvimtools/none-ls.nvim",
-    event = { "BufReadPre", "BufNewFile" },
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      "mason-org/mason.nvim",
-      "jayp0521/mason-null-ls.nvim",
-    },
-    opts = function()
-      local null_ls = require("null-ls")
-
-      return {
-        sources = {
-          null_ls.builtins.diagnostics.fish,
-          null_ls.builtins.diagnostics.hadolint,
-          null_ls.builtins.diagnostics.haml_lint.with({
-            command = { "bundle", "exec", "haml-lint" },
-            env = {
-              RUBYOPT = "-W0",
-            },
-          }),
-          null_ls.builtins.diagnostics.terraform_validate,
-        },
-      }
-    end,
-  },
-
-  {
     "neovim/nvim-lspconfig",
     cmd = "LspInfo",
     event = { "BufReadPre", "BufNewFile" },
