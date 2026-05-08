@@ -43,9 +43,6 @@ local kind_filter = {
 local function get_kind_filter(buf)
   buf = (buf == nil or buf == 0) and vim.api.nvim_get_current_buf() or buf
   local ft = vim.bo[buf].filetype
-  if kind_filter == false then
-    return
-  end
   if kind_filter[ft] == false then
     return
   end
