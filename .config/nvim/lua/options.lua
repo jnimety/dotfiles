@@ -28,12 +28,7 @@ vim.opt.shiftround = true
 vim.opt.expandtab = true
 vim.opt.scrolloff = 8
 
--- Directories for swap files
-vim.opt.backupdir = vim.fs.normalize("~/.vim/backup")
-vim.opt.directory = vim.fs.normalize("~/.vim/backup")
-
--- Disable swap files
-vim.cmd([[ set noswapfile ]])
+vim.opt.swapfile = false
 
 -- Line numbers
 vim.wo.number = true
