@@ -57,10 +57,8 @@ vim.opt.pumblend = 10 -- Popup blend
 vim.opt.pumheight = 10 -- Maximum number of entries in a popup
 
 vim.opt.shortmess:append({ W = true, I = true, c = true })
-if vim.fn.has("nvim-0.9.0") == 1 then
-  vim.opt.splitkeep = "screen"
-  vim.opt.shortmess:append({ C = true })
-end
+vim.opt.splitkeep = "screen"
+vim.opt.shortmess:append({ C = true })
 
 -- set yank to automatically use the system clipboard
 vim.opt.clipboard = "unnamedplus"
