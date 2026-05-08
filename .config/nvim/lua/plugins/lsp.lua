@@ -64,8 +64,8 @@ return {
     cmd = "LspInfo",
     event = { "BufReadPre", "BufNewFile" },
     dependencies = {
-      -- Automatically install LSPs to stdpath for neovim
       "mason-org/mason.nvim",
+      "mason-org/mason-lspconfig.nvim",
       { "saghen/blink.cmp", branch = "v1" },
     },
     config = function()
@@ -168,7 +168,4 @@ return {
     end,
   },
 
-  {
-    "mason-org/mason-lspconfig.nvim",
-  },
 }
