@@ -5,7 +5,7 @@ return {
     dependencies = {
       "nvim-lua/plenary.nvim",
       "mason-org/mason.nvim",
-      "jayp0521/mason-null-ls.nvim",
+      "jay-babu/mason-null-ls.nvim",
     },
     opts = function()
       local null_ls = require("null-ls")
