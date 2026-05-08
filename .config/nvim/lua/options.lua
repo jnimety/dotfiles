@@ -6,8 +6,8 @@ vim.g.loaded_netrwPlugin = 1
 vim.g.mapleader = " "
 
 vim.opt.termguicolors = true
-vim.o.background = "dark"
-vim.o.winborder = "rounded"
+vim.opt.background = "dark"
+vim.opt.winborder = "rounded"
 
 vim.g.loaded_perl_provider = 0
 vim.g.loaded_node_provider = 0
@@ -34,19 +34,19 @@ vim.opt.swapfile = false
 vim.opt.number = true
 vim.opt.relativenumber = true
 
-vim.o.updatetime = 250
+vim.opt.updatetime = 250
 vim.opt.signcolumn = "yes"
 
 vim.opt.completeopt = "menu,menuone,noselect"
 
 -- search
-vim.o.hlsearch = false
-vim.o.incsearch = true
-vim.o.ignorecase = true
-vim.o.smartcase = true
-vim.o.grepprg = "rg --vimgrep --multiline-dotall"
+vim.opt.hlsearch = false
+vim.opt.incsearch = true
+vim.opt.ignorecase = true
+vim.opt.smartcase = true
+vim.opt.grepprg = "rg --vimgrep --multiline-dotall"
 
-vim.o.undofile = false
+vim.opt.undofile = false
 
 vim.opt.mouse = ""
 
