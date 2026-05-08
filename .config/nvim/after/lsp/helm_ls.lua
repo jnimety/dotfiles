@@ -3,7 +3,7 @@ return {
   settings = {
     ["helm-ls"] = {
       yamlls = {
-        path = "/Users/jnimety/.local/share/nvim/mason/bin/yaml-language-server",
+        path = vim.fn.stdpath("data") .. "/mason/bin/yaml-language-server",
       },
     },
   },
