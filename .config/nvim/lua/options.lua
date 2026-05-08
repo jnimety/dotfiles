@@ -15,7 +15,7 @@ vim.g.loaded_python3_provider = 0
 
 vim.opt.backspace = "2"
 vim.opt.showcmd = true
-vim.opt.laststatus = 2
+vim.opt.laststatus = 3
 vim.opt.autowrite = true
 vim.opt.cursorline = true -- Highlight the text line of the cursor
 vim.opt.autoread = true
