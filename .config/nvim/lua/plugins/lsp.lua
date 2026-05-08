@@ -5,7 +5,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
     local client = vim.lsp.get_client_by_id(args.data.client_id)
 
     if client then
-      -- local builtin = require("telescope.builtin")
       local builtin = Snacks.picker
 
       local keymap_opts = function(desc)
