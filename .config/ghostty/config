@@ -19,3 +19,5 @@ font-size = 16
 font-feature = calt=0
 
 quit-after-last-window-closed = true
+
+shell-integration-features = ssh-terminfo,ssh-env

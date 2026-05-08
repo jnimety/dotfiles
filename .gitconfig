@@ -8,3 +8,5 @@
   path = ~/.gitconfig.d/gitflow
 [advice]
 	skippedCherryPicks = false
+[init]
+	defaultBranch = main
