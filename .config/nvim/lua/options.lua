@@ -13,7 +13,7 @@ vim.g.loaded_perl_provider = 0
 vim.g.loaded_node_provider = 0
 vim.g.loaded_python3_provider = 0
 
-vim.opt.backspace = "2"
+vim.opt.backspace = { "indent", "eol", "start" }
 vim.opt.showcmd = true
 vim.opt.laststatus = 3
 vim.opt.autowrite = true
