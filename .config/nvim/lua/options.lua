@@ -31,11 +31,11 @@ vim.opt.scrolloff = 8
 vim.opt.swapfile = false
 
 -- Line numbers
-vim.wo.number = true
-vim.wo.relativenumber = true
+vim.opt.number = true
+vim.opt.relativenumber = true
 
 vim.o.updatetime = 250
-vim.wo.signcolumn = "yes"
+vim.opt.signcolumn = "yes"
 
 vim.opt.completeopt = "menu,menuone,noselect"
 
