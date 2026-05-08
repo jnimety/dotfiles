@@ -28,7 +28,7 @@ terraform_purple = '#7c42bc'
 
 [character]
 success_symbol = "[❯](blue)"
-error_symbol = "[❯](blue)"
+error_symbol = "[❯](red)"
 vimcmd_symbol = "[❮](blue)"
 
 # ~/.config/starship.toml
