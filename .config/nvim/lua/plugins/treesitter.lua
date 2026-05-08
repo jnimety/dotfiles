@@ -3,7 +3,6 @@ return { -- Highlight, edit, and navigate code
   branch = "main",
   version = false,
   build = ":TSUpdate",
-  lazy = false,
   event = { "BufReadPost", "BufNewFile" },
   cmd = { "TSUpdateSync", "TSUpdate", "TSInstall", "TSLog", "TSUninstall" },
   keys = {
@@ -71,18 +70,12 @@ return { -- Highlight, edit, and navigate code
         vim.treesitter.start(buf, language)
 
         -- enable indents
-        local noIndent = {}
-        if not vim.list_contains(noIndent, args.match) then
-          vim.bo[buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
-        end
+        vim.bo[buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
 
         -- enable folds
-        local noFold = {}
-        if not vim.list_contains(noFold, args.match) then
-          vim.opt.foldmethod = "expr"
-          vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
-          vim.opt.foldenable = false
-        end
+        vim.opt.foldmethod = "expr"
+        vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+        vim.opt.foldenable = false
       end,
     })
   end,
