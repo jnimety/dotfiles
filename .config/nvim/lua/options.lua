@@ -66,3 +66,6 @@ if vim.fn.has("nvim-0.9.0") == 1 then
   vim.opt.splitkeep = "screen"
   vim.opt.shortmess:append({ C = true })
 end
+
+-- set yank to automatically use the system clipboard
+vim.opt.clipboard = "unnamedplus"

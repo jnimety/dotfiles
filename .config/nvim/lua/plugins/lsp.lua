@@ -60,7 +60,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
         vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "InsertLeave" }, {
           buffer = buffer,
           callback = function()
-            vim.lsp.codelens.refresh({ bufnr = 0 })
+            vim.lsp.codelens.enable(true, { bufnr = buffer })
           end,
         })
       end
@@ -76,7 +76,7 @@ return {
     dependencies = {
       -- Automatically install LSPs to stdpath for neovim
       "mason-org/mason.nvim",
-      "saghen/blink.cmp",
+      { "saghen/blink.cmp", branch = "v1" },
     },
     config = function()
       vim.diagnostic.config({

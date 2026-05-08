@@ -1,6 +1,5 @@
 ---@type vim.lsp.Config
 return {
-  cmd = { "pnpm", "pnp-typescript-language-server", "--stdio" },
   init_options = {
     preferences = {
       includeInlayEnumMemberValueHints = true,
