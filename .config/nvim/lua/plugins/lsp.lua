@@ -107,16 +107,6 @@ return {
         },
       })
 
-      local float_config = {
-        focusable = true,
-        focus = true,
-        -- style = "minimal",
-        -- border = "rounded",
-        source = "if_many",
-      }
-      vim.lsp.buf.hover(float_config)
-      vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.buf.signature_help(float_config)
-
       local capabilities = vim.lsp.protocol.make_client_capabilities()
       capabilities = vim.tbl_deep_extend("force", capabilities, require("blink.cmp").get_lsp_capabilities({}, false))
 
