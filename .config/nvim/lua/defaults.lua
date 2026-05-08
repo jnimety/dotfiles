@@ -24,10 +24,6 @@ local defaults = {
       topdelete = "‾",
       changedelete = "~",
     },
-    telescope = {
-      prompt_prefix = " ",
-      selection_caret = " ",
-    },
     kinds = {
       Array = " ",
       Boolean = " ",
