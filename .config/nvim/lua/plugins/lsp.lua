@@ -107,6 +107,31 @@ return {
       vim.lsp.config("*", {
         capabilities = capabilities,
       })
+
+      -- Set up mason-lspconfig here so nvim-lspconfig's lsp/ configs are
+      -- already in the rtp when vim.lsp.enable() is called, ensuring cmd is
+      -- resolved correctly.
+      require("mason-lspconfig").setup({
+        automatic_enable = true,
+        automatic_installation = false,
+        ensure_installed = {
+          "ansiblels",
+          "bashls",
+          -- "biome", -- add to project package.json instead
+          "dockerls",
+          -- "ruby_lsp", -- add to project Gemfile instead
+          "rust_analyzer",
+          -- "sorbet", -- add to project Gemfile instead
+          "lua_ls",
+          "tailwindcss",
+          "terraformls",
+          "ts_ls",
+          "yamlls",
+        },
+      })
+
+      -- enable servers mason-lspconfig doesn't know about
+      vim.lsp.enable({ "biome", "ruby_lsp", "sorbet" })
     end,
   },
 
@@ -144,28 +169,6 @@ return {
           p:install()
         end
       end
-
-      require("mason-lspconfig").setup({
-        automatic_enable = true,
-        automatic_installation = false,
-        ensure_installed = {
-          "ansiblels",
-          "bashls",
-          -- "biome", -- add to project package.json instead
-          "dockerls",
-          -- "ruby_lsp", -- add to project Gemfile instead
-          "rust_analyzer",
-          -- "sorbet", -- add to project Gemfile instead
-          "lua_ls",
-          "tailwindcss",
-          "terraformls",
-          "ts_ls",
-          "yamlls",
-        },
-      })
-
-      -- enable servers mason-lspconfig doesn't know about
-      vim.lsp.enable({ "biome", "ruby_lsp", "sorbet" })
     end,
   },
 
