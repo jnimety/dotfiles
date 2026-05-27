@@ -27,7 +27,8 @@ vim.api.nvim_create_autocmd("VimResized", {
 -- Go to last loc when opening a buffer
 vim.api.nvim_create_autocmd("BufReadPost", {
   group = augroup("last_loc"),
-  callback = function()
+  callback = function(ev)
+    if vim.api.nvim_buf_get_name(ev.buf):match("COMMIT_EDITMSG$") then return end
     local mark = vim.api.nvim_buf_get_mark(0, '"')
     local lcount = vim.api.nvim_buf_line_count(0)
     if mark[1] > 0 and mark[1] <= lcount then

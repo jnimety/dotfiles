@@ -41,6 +41,13 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "gitcommit",
+  callback = function(_)
+    vim.api.nvim_win_set_cursor(0, { 1, 0 })
+  end,
+})
+
 vim.filetype.add({
   pattern = {
     ["%.gitignore"] = "gitignore",
