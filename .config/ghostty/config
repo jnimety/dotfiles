@@ -20,4 +20,4 @@ font-feature = calt=0
 
 quit-after-last-window-closed = true
 
-shell-integration-features = ssh-terminfo,ssh-env
+shell-integration-features = cursor,title,path,ssh-env,ssh-terminfo
