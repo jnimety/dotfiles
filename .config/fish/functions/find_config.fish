@@ -5,7 +5,7 @@ function find_config -a file
     # 3. Return NULL.
 
     if test -e "$file"
-        printf '%s\n' (string trim -r -c / (pwd))
+        printf '%s\n' (realpath (dirname $file))
     else if test (realpath (dirname $file)) = $HOME
         false
     else

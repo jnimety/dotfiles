@@ -1,20 +1,20 @@
 # Set up fzf key bindings
 
-set FZF_DEFAULT_OPTS '
+set -g FZF_DEFAULT_OPTS '
   --cycle --layout=reverse --border --height=90%
   --preview-window=wrap --marker="*"'
 
-set FZF_COMPLETION_OPTS ''
-set FZF_DEFAULT_COMMAND 'fd --type f --strip-cwd-prefix'
+set -g FZF_COMPLETION_OPTS ''
+set -g FZF_DEFAULT_COMMAND 'fd --type f --strip-cwd-prefix'
 
 # Preview file content using bat (https://github.com/sharkdp/bat)
-set FZF_CTRL_T_OPTS "
+set -g FZF_CTRL_T_OPTS "
   --walker-skip .git,node_modules,target,sorbet
   --preview 'bat -n --color=always {}'
   --bind 'ctrl-/:change-preview-window(down|hidden|)'"
 
 # https://github.com/folke/tokyonight.nvim/blob/main/extras/fzf/tokyonight_night.sh
-set FZF_COMPLETION_OPTS "$FZF_COMPLETION_OPTS \
+set -g FZF_COMPLETION_OPTS "$FZF_COMPLETION_OPTS \
   --highlight-line \
   --info=inline-right \
   --ansi \

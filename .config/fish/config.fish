@@ -12,7 +12,6 @@ set -gx VISUAL nvim
 set -gx EDITOR $VISUAL
 set -gx GIT_EDITOR $VISUAL
 set -gx LANG en_US.UTF-8
-set -gx LOCALE UTF-8
 set -gx LC_ALL en_US.UTF-8
 set -gx LC_COLLATE C
 # set -gx MANPAGER "sh -c 'col -bx | bat --language man --plain'"
