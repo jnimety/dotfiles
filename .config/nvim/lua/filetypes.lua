@@ -45,6 +45,9 @@ vim.api.nvim_create_autocmd("FileType", {
   pattern = "gitcommit",
   callback = function(_)
     vim.api.nvim_win_set_cursor(0, { 1, 0 })
+    vim.defer_fn(function()
+      vim.api.nvim_win_set_cursor(0, { 1, 0 })
+    end, 100)
   end,
 })
 

@@ -27,8 +27,14 @@ vim.api.nvim_create_autocmd("VimResized", {
 -- Go to last loc when opening a buffer
 vim.api.nvim_create_autocmd("BufReadPost", {
   group = augroup("last_loc"),
-  callback = function(ev)
-    if vim.api.nvim_buf_get_name(ev.buf):match("COMMIT_EDITMSG$") then return end
+  callback = function()
+    local exclude = { "gitcommit", "commit", "gitrebase" }
+    local buf = vim.api.nvim_get_current_buf()
+    if vim.tbl_contains(exclude, vim.bo[buf].filetype) then
+      vim.api.nvim_buf_del_mark(buf, '"')
+      return
+    end
+
     local mark = vim.api.nvim_buf_get_mark(0, '"')
     local lcount = vim.api.nvim_buf_line_count(0)
     if mark[1] > 0 and mark[1] <= lcount then
@@ -42,7 +48,7 @@ vim.api.nvim_create_autocmd("LspProgress", {
   ---@param ev {data: {client_id: integer, params: lsp.ProgressParams}}
   callback = function(ev)
     local spinner = { "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" }
-    vim.notify(vim.lsp.status(), "info", {
+    vim.notify(vim.lsp.status(), vim.log.levels.INFO, {
       id = "lsp_progress",
       title = "LSP Progress",
       opts = function(notif)
