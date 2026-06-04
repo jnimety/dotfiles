@@ -13,11 +13,25 @@
   diff = true
   ui = true
 [core]
-  pager = "less -F -X"
-  editor = /usr/bin/vim
+  pager = "less -FXR"
+  editor = nvim
   preloadindex = true
   excludesfile = ~/.gitconfig.d/gitignore
 [merge]
-  tool = /usr/bin/vimdiff
+  tool = nvimdiff
+  conflictstyle = zdiff3
 [push]
   default = simple
+  autoSetupRemote = true
+[pull]
+  rebase = true
+[fetch]
+  prune = true
+[rebase]
+  autosquash = true
+[diff]
+  colorMoved = default
+[init]
+  defaultBranch = main
+[branch]
+  sort = -committerdate
