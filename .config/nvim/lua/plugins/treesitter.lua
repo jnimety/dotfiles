@@ -24,7 +24,7 @@ return { -- Highlight, edit, and navigate code
       "fish",
       "git_rebase",
       "gitattributes",
-      "gitcommit",
+      -- "gitcommit", -- very resource intensive to compile
       "gitignore",
       "hcl",
       "html",
