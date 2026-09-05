@@ -1,1 +1,1 @@
-status --is-interactive; and source (nodenv init -|psub)
+status --is-interactive; and command -q nodenv; and source (nodenv init -|psub)
