@@ -1,8 +1,9 @@
 "$schema" = 'https://starship.rs/config-schema.json'
 
 format = """
-$hostname\
 $username\
+[@](bg:blue fg:dark_gray)\
+$hostname\
 [](bg:gray fg:blue)\
 $directory\
 [](fg:gray bg:dark_gray)\
@@ -35,12 +36,13 @@ vimcmd_symbol = "[❮](blue)"
 
 [hostname]
 ssh_only = false
-format = '[ $hostname ](bg:blue fg:dark_gray)'
+format = '[$hostname ](bg:blue fg:dark_gray)'
 disabled = false
 
 [username]
+style_user = "bg:blue fg:dark_gray"
 style_root = "bold fg:ruby_red bg:blue"
-format = '[ $user ]($style)'
+format = '[ $user]($style)'
 
 [directory]
 style = "fg:blue bg:gray"
