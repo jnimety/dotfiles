@@ -112,6 +112,7 @@ return {
         automatic_installation = false,
         ensure_installed = {
           "ansiblels",
+          "basedpyright",
           "bashls",
           -- "biome", -- add to project package.json instead
           "dockerls",
@@ -119,6 +120,7 @@ return {
           "rust_analyzer",
           -- "sorbet", -- add to project Gemfile instead
           "lua_ls",
+          "ruff",
           "tailwindcss",
           "terraformls",
           "ts_ls",
