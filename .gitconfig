@@ -10,3 +10,5 @@
 	skippedCherryPicks = false
 [init]
 	defaultBranch = main
+[core]
+	hooksPath = /Users/jnimety/.dotfiles/git/hooks
