@@ -32,4 +32,4 @@ fi
 REPO_ROOT="$(git rev-parse --show-toplevel 2>/dev/null)" || exit 0
 cd "$REPO_ROOT" || exit 1
 
-exec "$GITLEAKS" git --pre-commit --staged .
+exec "$GITLEAKS" protect --staged --redact --no-banner .
