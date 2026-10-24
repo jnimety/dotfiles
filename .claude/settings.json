@@ -1,0 +1,253 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "env": {
+    "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1",
+    "CLAUDE_CODE_SUBPROCESS_ENV_SCRUB": "1",
+    "DISABLE_ERROR_REPORTING": "1",
+    "DISABLE_TELEMETRY": "1",
+    "DO_NOT_TRACK": "1"
+  },
+  "permissions": {
+    "allow": [
+      "Bash(gh pr diff *)",
+      "Bash(gh pr view *)",
+      "Bash(gh run list *)",
+      "Bash(gh run view *)",
+      "Bash(git blame *)",
+      "Bash(git diff *)",
+      "Bash(git log *)",
+      "Bash(git show *)",
+      "Bash(git status *)",
+      "Bash(git status)",
+      "Bash(jq *)",
+      "Bash(kubectl api-resources *)",
+      "Bash(kubectl api-resources)",
+      "Bash(kubectl api-versions *)",
+      "Bash(kubectl api-versions)",
+      "Bash(kubectl cluster-info *)",
+      "Bash(kubectl cluster-info)",
+      "Bash(kubectl describe *)",
+      "Bash(kubectl diff *)",
+      "Bash(kubectl explain *)",
+      "Bash(kubectl get *)",
+      "Bash(kubectl logs *)",
+      "Bash(kubectl top *)",
+      "Bash(kubectl version *)",
+      "Bash(kubectl version)",
+      "Bash(rg *)",
+      "Bash(terraform fmt *)",
+      "Bash(terraform validate *)",
+      "Bash(yq *)"
+    ],
+    "ask": [
+      "Bash(git commit *)",
+      "Bash(git push *)",
+      "Bash(git push)",
+      "Bash(git push --force *)",
+      "Bash(git push -f *)",
+      "Bash(git reset --hard *)",
+      "Bash(git clean -*)",
+      "Bash(kubectl apply *)",
+      "Bash(kubectl delete *)",
+      "Bash(kubectl edit *)",
+      "Bash(terraform apply *)",
+      "Bash(terraform destroy *)",
+      "Bash(terraform import *)",
+      "Bash(terraform state *)",
+      "Bash(helm uninstall *)",
+      "Bash(helm upgrade *)",
+      "Bash(docker system prune *)",
+      "Bash(docker volume rm *)",
+      "Bash(gh pr merge *)",
+      "Bash(gh release *)",
+      "Bash(npm publish *)",
+      "Bash(gem push *)"
+    ],
+    "defaultMode": "plan",
+    "deny": [
+      "Read(**/.env)",
+      "Read(**/.env.*)",
+      "Read(!**/.env.example)",
+      "Read(!**/.env.sample)",
+      "Read(**/.envrc)",
+      "Read(~/.ssh/**)",
+      "Read(~/.aws/**)",
+      "Read(~/.kube/**)",
+      "Read(~/.config/**)",
+      "Read(~/.gnupg/**)",
+      "Read(~/.netrc)",
+      "Read(~/.git-credentials)",
+      "Read(~/.npmrc)",
+      "Read(~/.docker/config.json)",
+      "Read(~/.terraform.d/credentials.tfrc.json)",
+      "Read(~/.claude.json)",
+      "Read(~/.claude/.credentials.json)",
+      "Read(~/.claude/history.jsonl)",
+      "Read(~/Library/Keychains/**)",
+      "Read(//etc/shadow)",
+      "Read(//etc/sudoers)",
+      "Read(//etc/sudoers.d/**)",
+      "Read(//etc/ssh/ssh_host_*_key)",
+      "Read(//etc/ssl/private/**)",
+      "Read(//etc/kubernetes/**)"
+    ],
+    "disableBypassPermissionsMode": "disable"
+  },
+  "sandbox": {
+    "enabled": true,
+    "autoAllowBashIfSandboxed": false,
+    "allowUnsandboxedCommands": true,
+    "failIfUnavailable": false,
+    "excludedCommands": [
+      "docker *",
+      "docker compose *",
+      "gh *",
+      "terraform *",
+      "ssh *",
+      "scp *",
+      "rsync *",
+      "sftp *",
+      "ansible *",
+      "ansible-playbook *",
+      "ansible-galaxy *",
+      "git fetch *",
+      "git pull *",
+      "git push *",
+      "git clone *",
+      "git ls-remote *",
+      "git submodule update *"
+    ],
+    "filesystem": {
+      "denyRead": [
+        "~/.ssh",
+        "~/.gnupg",
+        "~/.claude",
+        "~/.claude.json",
+        "~/.netrc",
+        "~/.git-credentials",
+        "~/.npmrc",
+        "~/.config/gh",
+        "~/.config/gcloud",
+        "~/Library/Keychains"
+      ],
+      "allowWrite": [
+        "~/.kube",
+        "~/.npm",
+        "~/.bun",
+        "~/.pnpm-state",
+        "~/.cache",
+        "~/Library/Caches",
+        "~/Library/pnpm",
+        "~/.bundle",
+        "~/.gem",
+        "~/.rbenv",
+        "~/.cargo",
+        "~/.rustup",
+        "~/go",
+        "/opt/homebrew"
+      ]
+    },
+    "network": {
+      "allowedDomains": [
+        "github.com",
+        "*.github.com",
+        "*.githubusercontent.com",
+        "registry.npmjs.org",
+        "*.npmjs.org",
+        "pypi.org",
+        "files.pythonhosted.org",
+        "*.pythonhosted.org",
+        "rubygems.org",
+        "*.rubygems.org",
+        "registry.terraform.io",
+        "releases.hashicorp.com",
+        "*.hashicorp.com",
+        "formulae.brew.sh",
+        "ghcr.io",
+        "proxy.golang.org",
+        "sum.golang.org",
+        "storage.googleapis.com",
+        "crates.io",
+        "static.crates.io",
+        "index.crates.io",
+        "*.amazonaws.com",
+        "*.eks.amazonaws.com",
+        "k3s.nimety.com",
+        "[fd0c:f6f1:d348:185::2]:6443",
+        "127.0.0.1:6443",
+        "localhost"
+      ]
+    }
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/format-after-edit.sh",
+            "statusMessage": "Formatting..."
+          },
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/shellcheck-after-edit.sh",
+            "statusMessage": "Running shellcheck..."
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/format-md-after-bash.sh",
+            "statusMessage": "Formatting markdown..."
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Read|Grep|Glob|Edit|Write|NotebookEdit|Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/guard.sh",
+            "statusMessage": "Checking guardrails..."
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/mark-bash-start.sh"
+          }
+        ]
+      }
+    ]
+  },
+  "enabledPlugins": {
+    "ruby-lsp@claude-plugins-official": true,
+    "typescript-lsp@claude-plugins-official": true
+  },
+  "extraKnownMarketplaces": {
+    "kindros": {
+      "source": {
+        "source": "directory",
+        "path": "/Users/jnimety/workspace/kindros/kindros-claude"
+      }
+    }
+  },
+  "tui": "fullscreen",
+  "editorMode": "vim",
+  "pluginConfigs": {
+    "cc-plugin-agents-md@builtin": {
+      "options": {
+        "instructionFiles": "claude-md-or-agents-md"
+      }
+    }
+  }
+}
