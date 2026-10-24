@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+
+# Global pre-commit hook for gitleaks
+# Prevents committing secrets
+
+# Skip if requested
+if [ -n "$SKIP" ] && [[ "$SKIP" =~ gitleaks ]]; then
+  exit 0
+fi
+
+# Fast exit if nothing staged
+git diff --cached --quiet && exit 0
+
+# Find gitleaks
+GITLEAKS=""
+if [ -n "$GITLEAKS_BIN" ]; then
+  GITLEAKS="$GITLEAKS_BIN"
+elif command -v gitleaks >/dev/null 2>&1; then
+  GITLEAKS="$(command -v gitleaks)"
+elif [ -x "/opt/homebrew/bin/gitleaks" ]; then
+  GITLEAKS="/opt/homebrew/bin/gitleaks"
+elif [ -x "/usr/local/bin/gitleaks" ]; then
+  GITLEAKS="/usr/local/bin/gitleaks"
+fi
+
+if [ -z "$GITLEAKS" ]; then
+  echo "gitleaks not found in PATH. Install with 'brew install gitleaks' or add to PATH." >&2
+  exit 1
+fi
+
+# Run from repo root
+REPO_ROOT="$(git rev-parse --show-toplevel 2>/dev/null)" || exit 0
+cd "$REPO_ROOT" || exit 1
+
+exec "$GITLEAKS" git --pre-commit --staged .
