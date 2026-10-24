@@ -14,3 +14,14 @@
 .config/tmux/terminfo.src
 
 .claude/settings.local.json
+
+# Secrets
+.config/exercism/user.json
+.config/opencode/service.json
+.config/pgedge/postgres-mcp.yaml
+
+# Local/state files
+.config/cagent/.cagent_first_run
+
+# Machine-specific tool configs
+.config/tree-sitter/config.json
