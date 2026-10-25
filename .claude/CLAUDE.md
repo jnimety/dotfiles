@@ -5,7 +5,7 @@
 - Use `jq` for JSON parsing, not `python3 -m json.tool` or other Python-based approaches.
 - Use `yq` for YAML parsing, not Python or other approaches.
 - Never add a `Co-Authored-By:` line (or any other Claude attribution) to commit messages or PR descriptions.
-- This laptop's login shell is fish. Shell commands must either be written for fish or explicitly invoke bash (e.g. `bash -c '...'`); don't rely on POSIX/bash syntax by default.
+- The Bash tool runs zsh, so write tool commands in zsh/POSIX syntax. This laptop's login shell is fish: commands for the user to paste into their own terminal must be written for fish or explicitly invoke bash (e.g. `bash -c '...'`).
 
 ## Commits
 
