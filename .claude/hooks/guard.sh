@@ -55,6 +55,15 @@ is_under() {
   return 1
 }
 
+# Claude Code's own working files under ~/.claude: plan mode's plans and
+# per-project memory. Rejects ".." so a path can't climb back out.
+is_session_data() {
+  case "$1" in */../*|*/..) return 1 ;; esac
+  is_under "$1" "$HOME/.claude/plans" && return 0
+  case "$1" in "$HOME"/.claude/projects/*/memory/*) return 0 ;; esac
+  return 1
+}
+
 # Paths whose contents are credentials, private keys, or auth tokens.
 protected_paths=(
   "$HOME/.ssh"
@@ -98,7 +107,7 @@ if [ -n "$path" ]; then
     fi
   done
 
-  if [ "$allow_config_edit" != "1" ]; then
+  if [ "$allow_config_edit" != "1" ] && ! { is_session_data "$p" && is_session_data "$r"; }; then
     case "$tool" in
       Edit|Write|NotebookEdit)
         for prefix in "${config_paths[@]}"; do
