@@ -3,6 +3,8 @@
 # (sh, bash, dash, ksh, busybox sh) and report findings back to Claude.
 # Exit 2 sends stderr to Claude; any other problem exits 0 so edits never block.
 
+PATH="/usr/bin:/bin:/usr/sbin:/sbin:/opt/homebrew/bin:$PATH"
+
 f=$(jq -r '.tool_input.file_path // .tool_response.filePath // empty')
 [ -n "$f" ] && [ -f "$f" ] || exit 0
 

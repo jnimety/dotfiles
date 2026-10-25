@@ -6,8 +6,16 @@
 # permission rule does not match. The sandbox still enforces the same
 # paths at the OS level for shell commands.
 #
+# The Bash checks are pattern matches that catch accidents, not a
+# boundary: quoting, cd, or variables get around them. The sandbox is the
+# control that holds.
+#
 # Denials are logged to ~/.claude/audit.jsonl.
 # Set CLAUDE_ALLOW_CONFIG_EDIT=1 to allow editing Claude/shell config.
+
+# Hooks run outside the sandbox, so resolve tools from system and Homebrew
+# directories before anything a sandboxed command can write to.
+PATH="/usr/bin:/bin:/usr/sbin:/sbin:/opt/homebrew/bin:$PATH"
 
 input=$(cat)
 tool=$(jq -r '.tool_name // empty' <<<"$input" 2>/dev/null) || exit 0
@@ -78,23 +86,43 @@ protected_paths=(
   "$HOME/.claude/history.jsonl"
   "$HOME/.config/gh"
   "$HOME/.config/gcloud"
+  "$HOME/.config/op"
+  "$HOME/.config/helm"
+  "$HOME/.config/rclone"
+  "$HOME/.config/sops"
+  "$HOME/.config/git/credentials"
+  "$HOME/.config/configstore"
   "$HOME/Library/Keychains"
 )
 
 # Files that change how Claude Code or the shell behaves. Writing these from
-# inside a session is a privilege escalation path.
+# inside a session is a privilege escalation path. The home-directory
+# entries are symlinks into ~/.dotfiles, and realpath only resolves toward
+# the target, so the dotfiles copies are listed too.
 config_paths=(
   "$HOME/.claude"
   "$HOME/.claude.json"
   "$HOME/.ssh"
   "$HOME/.gitconfig"
+  "$HOME/.gitconfig.d"
   "$HOME/.zshrc"
   "$HOME/.bashrc"
   "$HOME/.profile"
   "$HOME/.zshenv"
   "$HOME/.zprofile"
   "$HOME/.config/fish"
+  "$HOME/.dotfiles/.claude"
+  "$HOME/.dotfiles/.gitconfig"
+  "$HOME/.dotfiles/.gitconfig.d"
+  "$HOME/.dotfiles/.zshrc"
+  "$HOME/.dotfiles/.bashrc"
+  "$HOME/.dotfiles/.profile"
+  "$HOME/.dotfiles/.config/fish"
+  "$HOME/.dotfiles/git/hooks"
 )
+
+# The same targets as a regex for spotting them in shell commands.
+config_re='(\.claude/|\.claude\.json|\.ssh/|\.gitconfig|\.zshrc|\.bashrc|\.profile|\.zshenv|\.zprofile|\.config/fish/|git/hooks/)'
 
 path=$(jq -r '.tool_input.file_path // .tool_input.path // .tool_input.notebook_path // empty' <<<"$input" 2>/dev/null)
 if [ -n "$path" ]; then
@@ -127,42 +155,49 @@ if [ "$tool" = "Bash" ]; then
   cmd=$(jq -r '.tool_input.command // empty' <<<"$input" 2>/dev/null)
   [ -n "$cmd" ] || exit 0
 
-  if printf '%s' "$cmd" | grep -Eq '(^|[;&|([:space:]])(sudo|doas)([[:space:]]|$)'; then
+  # Only in command position, so `rg sudo` or a commit message mentioning
+  # sudo still runs.
+  if printf '%s' "$cmd" | grep -Eq '(^|[;&|(]|\$\()[[:space:]]*(sudo|doas)([[:space:]]|$)'; then
     deny "Blocked privilege escalation command (sudo/doas)"
   fi
 
-  if printf '%s' "$cmd" | grep -Eq '(curl|wget)[^|]*\|[[:space:]]*(sudo[[:space:]]+)?(ba|z|da|k)?sh([[:space:]]|$)'; then
+  if printf '%s' "$cmd" | grep -Eq '(curl|wget)[^|]*\|[[:space:]]*(sudo[[:space:]]+)?(ba|z|da|k)?sh([[:space:]]|$)|(^|[;&|[:space:]])(ba|z|da|k)?sh[[:space:]]+<\([[:space:]]*(curl|wget)'; then
     deny "Blocked pipe-to-shell command"
   fi
 
-  if printf '%s' "$cmd" | grep -Eq '(^|[;&|[:space:]])rm[[:space:]]+-[^[:space:]]*[rR][^[:space:]]*[fF]?[^[:space:]]*[[:space:]]+/(\*)?([[:space:]]|$)'; then
-    deny "Blocked recursive delete of a root path"
+  # shellcheck disable=SC2016 # literal $HOME / ${HOME} text, not expansion
+  if printf '%s' "$cmd" | grep -Eq '(^|[;&|[:space:]])rm[[:space:]]+(-[^[:space:]]*[[:space:]]+)*"?(/|~|\$HOME|\$\{HOME\})"?/?(\*)?"?([[:space:]]|$)'; then
+    deny "Blocked recursive delete of a root or home path"
   fi
 
   if printf '%s' "$cmd" | grep -Eq '(^|[;&|[:space:]])(mkfs|wipefs)([[:space:]]|$)|dd[[:space:]][^|;&]*of=/dev/'; then
     deny "Blocked disk-destructive command"
   fi
 
+  # A reader only counts when the credential path is one of its own
+  # arguments (same pipeline segment), so `kubectl --kubeconfig
+  # ~/.kube/config get pods | grep x` isn't caught by the grep.
+  readers='cat|bat|less|more|head|tail|grep|rg|sed|awk|base64|xxd|od|strings|openssl|curl|wget|nc|ncat|python3?|node|perl|ruby|tar|zip|cp|mv|scp|rsync'
   for prefix in "${protected_paths[@]}"; do
     tilde=${prefix#"$HOME"}
     # shellcheck disable=SC2016 # these single-quoted forms match literal $HOME/${HOME} text
-    case "$cmd" in
-      *"$prefix"*|*"~$tilde"*|*'$HOME'"$tilde"*|*'${HOME}'"$tilde"*)
-        if printf '%s' "$cmd" | grep -Eq '(^|[;&|[:space:]])(cat|bat|less|more|head|tail|grep|rg|sed|awk|base64|xxd|od|strings|openssl|curl|wget|nc|ncat|python3?|node|perl|ruby|tar|zip|cp|mv|scp|rsync)([[:space:]]|$)'; then
-          deny "Blocked command that reads a credential path: $prefix"
-        fi
-        ;;
-    esac
+    for form in "$prefix" "~$tilde" '$HOME'"$tilde" '${HOME}'"$tilde"; do
+      case "$cmd" in *"$form"*) ;; *) continue ;; esac
+      esc=$(printf '%s' "$form" | sed 's/[][\.*^$(){}+?|]/\\&/g')
+      if printf '%s' "$cmd" | grep -Eq "(^|[;&|[:space:]])($readers)[[:space:]][^|;&]*$esc"; then
+        deny "Blocked command that reads a credential path: $prefix"
+      fi
+    done
   done
 
   if [ "$allow_config_edit" != "1" ]; then
-    if printf '%s' "$cmd" | grep -Eq '(>|>>)[[:space:]]*[^[:space:];&|]*(\.claude/|\.claude\.json|\.ssh/|\.gitconfig|\.zshrc|\.bashrc|\.profile|\.zshenv|\.zprofile)'; then
+    if printf '%s' "$cmd" | grep -Eq "(>|>>)[[:space:]]*[^[:space:];&|]*$config_re"; then
       deny "Blocked shell redirect into protected config (set CLAUDE_ALLOW_CONFIG_EDIT=1 to override)"
     fi
-    if printf '%s' "$cmd" | grep -Eq '(^|[;&|[:space:]])tee[[:space:]][^|;&]*(\.claude/|\.claude\.json|\.ssh/|\.gitconfig|\.zshrc|\.bashrc|\.profile|\.zshenv|\.zprofile)'; then
+    if printf '%s' "$cmd" | grep -Eq "(^|[;&|[:space:]])tee[[:space:]][^|;&]*$config_re"; then
       deny "Blocked tee into protected config (set CLAUDE_ALLOW_CONFIG_EDIT=1 to override)"
     fi
-    if printf '%s' "$cmd" | grep -Eq '(^|[;&|[:space:]])sed[[:space:]]+-i[^|;&]*(\.claude/|\.claude\.json|\.ssh/|\.gitconfig|\.zshrc|\.bashrc|\.profile|\.zshenv|\.zprofile)'; then
+    if printf '%s' "$cmd" | grep -Eq "(^|[;&|[:space:]])sed[[:space:]]+-i[^|;&]*$config_re"; then
       deny "Blocked in-place edit of protected config (set CLAUDE_ALLOW_CONFIG_EDIT=1 to override)"
     fi
   fi

@@ -4,6 +4,8 @@
 # The marker lives in a per-user 0700 directory rather than a
 # predictable world-writable /tmp path.
 
+PATH="/usr/bin:/bin:/usr/sbin:/sbin:/opt/homebrew/bin:$PATH"
+
 session_id=$(jq -r '.session_id // empty')
 case "$session_id" in
   ''|*[!A-Za-z0-9-]*) exit 0 ;;

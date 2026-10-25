@@ -3,6 +3,8 @@
 # language formatter. Failures are ignored so a formatter problem never
 # blocks an edit.
 
+PATH="/usr/bin:/bin:/usr/sbin:/sbin:/opt/homebrew/bin:$PATH"
+
 run() {
   if [ -x /opt/homebrew/bin/timeout ]; then
     /opt/homebrew/bin/timeout 30 "$@"

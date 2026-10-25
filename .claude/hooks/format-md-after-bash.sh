@@ -3,6 +3,10 @@
 # (python, sed), which the Write|Edit formatter hook never sees. Bash hook
 # payloads don't list changed files, so find markdown in the current project
 # that changed since the PreToolUse marker and format it with prettierd.
+# Symlinks are skipped: this hook runs outside the sandbox, so writing
+# through a link a sandboxed command planted would escape it.
+
+PATH="/usr/bin:/bin:/usr/sbin:/sbin:/opt/homebrew/bin:$PATH"
 
 input=$(cat)
 session_id=$(jq -r '.session_id // empty' <<<"$input")
@@ -30,7 +34,7 @@ else
   find "$cwd" -maxdepth 5 -name '*.md' \
     -not -path '*/node_modules/*' -not -path '*/.git/*' -print0 2>/dev/null
 fi |
-  xargs -0 -I{} find {} -maxdepth 0 -newer "$marker" -print0 2>/dev/null |
+  xargs -0 -I{} find {} -maxdepth 0 -type f -newer "$marker" -print0 2>/dev/null |
   while IFS= read -r -d '' f; do
     tmp=$(mktemp) || continue
     # shellcheck disable=SC2094 # output goes to $tmp, not back into $f

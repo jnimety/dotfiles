@@ -2,7 +2,6 @@
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
   "env": {
     "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1",
-    "CLAUDE_CODE_SUBPROCESS_ENV_SCRUB": "1",
     "DISABLE_ERROR_REPORTING": "1",
     "DISABLE_TELEMETRY": "1",
     "DO_NOT_TRACK": "1"
@@ -43,8 +42,6 @@
       "Bash(git commit *)",
       "Bash(git push *)",
       "Bash(git push)",
-      "Bash(git push --force *)",
-      "Bash(git push -f *)",
       "Bash(git reset --hard *)",
       "Bash(git clean -*)",
       "Bash(kubectl apply *)",
@@ -61,7 +58,8 @@
       "Bash(gh pr merge *)",
       "Bash(gh release *)",
       "Bash(npm publish *)",
-      "Bash(gem push *)"
+      "Bash(gem push *)",
+      "Bash(kubectl *secret*)"
     ],
     "defaultMode": "plan",
     "deny": [
@@ -73,7 +71,14 @@
       "Read(~/.ssh/**)",
       "Read(~/.aws/**)",
       "Read(~/.kube/**)",
-      "Read(~/.config/**)",
+      "Read(~/.config/gh/**)",
+      "Read(~/.config/gcloud/**)",
+      "Read(~/.config/op/**)",
+      "Read(~/.config/helm/**)",
+      "Read(~/.config/rclone/**)",
+      "Read(~/.config/sops/**)",
+      "Read(~/.config/git/credentials)",
+      "Read(~/.config/configstore/**)",
       "Read(~/.gnupg/**)",
       "Read(~/.netrc)",
       "Read(~/.git-credentials)",
@@ -97,12 +102,13 @@
     "enabled": true,
     "autoAllowBashIfSandboxed": false,
     "allowUnsandboxedCommands": true,
-    "failIfUnavailable": false,
+    "failIfUnavailable": true,
     "excludedCommands": [
       "docker *",
       "docker compose *",
       "gh *",
       "terraform *",
+      "kubectl *",
       "ssh *",
       "scp *",
       "rsync *",
@@ -131,20 +137,18 @@
         "~/Library/Keychains"
       ],
       "allowWrite": [
-        "~/.kube",
+        "~/.kube/cache",
         "~/.npm",
-        "~/.bun",
+        "~/.bun/install/cache",
         "~/.pnpm-state",
         "~/.cache",
         "~/Library/Caches",
         "~/Library/pnpm",
         "~/.bundle",
-        "~/.gem",
-        "~/.rbenv",
-        "~/.cargo",
-        "~/.rustup",
-        "~/go",
-        "/opt/homebrew"
+        "~/.gem/specs",
+        "~/.cargo/registry",
+        "~/.cargo/git",
+        "~/go/pkg/mod"
       ]
     },
     "network": {
@@ -213,8 +217,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "~/.claude/hooks/guard.sh",
-            "statusMessage": "Checking guardrails..."
+            "command": "~/.claude/hooks/guard.sh"
           }
         ]
       },
