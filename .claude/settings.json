@@ -65,9 +65,10 @@
     "deny": [
       "Read(**/.env)",
       "Read(**/.env.*)",
-      "Read(!**/.env.example)",
-      "Read(!**/.env.sample)",
       "Read(**/.envrc)",
+      "Read(~/**/.env)",
+      "Read(~/**/.env.*)",
+      "Read(~/**/.envrc)",
       "Read(~/.ssh/**)",
       "Read(~/.aws/**)",
       "Read(~/.kube/**)",
@@ -100,7 +101,7 @@
   },
   "sandbox": {
     "enabled": true,
-    "autoAllowBashIfSandboxed": false,
+    "autoAllowBashIfSandboxed": true,
     "allowUnsandboxedCommands": true,
     "failIfUnavailable": true,
     "excludedCommands": [
@@ -174,11 +175,6 @@
         "crates.io",
         "static.crates.io",
         "index.crates.io",
-        "*.amazonaws.com",
-        "*.eks.amazonaws.com",
-        "k3s.nimety.com",
-        "[fd0c:f6f1:d348:185::2]:6443",
-        "127.0.0.1:6443",
         "localhost"
       ]
     }
