@@ -7,6 +7,13 @@
 - After non-trivial code changes, have a Haiku subagent review the diff with fresh context.
 - When you make a mistake, do not apologize. State what happened, correct it, and identify its cause: a missing, ambiguous, or conflicting instruction, or a clear instruction you did not follow. If the cause is an instruction gap, propose a focused clarification and edit instruction files only when the author asks. If the instruction was clear, say so plainly rather than inventing a gap.
 
+## Self-documenting code
+
+- Name methods for what they do (`archive_expired_sessions`, not `process` or `handle_data`). If a name needs "and", split the method.
+- Write code that reads like a story: a top-level method should read as a sequence of well-named steps at one level of abstraction, with details pushed into helpers.
+- Prefer a clear name or an extracted method over a comment. Comments explain _why_, never _what_.
+- Don't extract a method that's used once and no clearer than the code it replaces.
+
 ## Conventions
 
 - Use `jq` for JSON parsing, not `python3 -m json.tool` or other Python-based approaches.
